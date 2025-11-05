@@ -1,0 +1,68 @@
+{
+    "storage_dir": "./results/pre_alg_2025_expanded",
+    "corpus_file": "collected_pre_alg.json",
+    "scrape": {
+      "concurrency": 6,
+      "timeout": 45,
+      "user_agent": "PattenizerBot/1.0 (Research: Pre-2010 Russian Blogs; +mailto:your-email@example.com)",
+      "retry_attempts": 5,
+      "delay": 1
+    },
+    "nlp": {
+      "use_natasha": true,
+      "pos_filter": ["NOUN", "VERB", "ADJ"],
+      "min_sentence_length": 15
+    },
+    "embeddings": {
+      "model_name": "sberbank-ai/sbert_large_nlu_ru",
+      "batch_size": 32
+    },
+    "umap": {
+      "n_neighbors": 10,
+      "min_dist": 0.1,
+      "n_components": 5,
+      "metric": "cosine"
+    },
+    "hdbscan": {
+      "min_cluster_size": 5,
+      "min_samples": 2,
+      "metric": "euclidean"
+    },
+    "pattern_similarity_threshold": 0.65,
+    "pattern_repr_top_k": 5,
+    "visualization": {
+      "network_html": "pre_alg_themes_network_expanded.html"
+    },
+    "parallel": {
+      "chunks": 1000
+    },
+    "comparison": {
+      "ged_timeout": 120
+    },
+    "pattern_extraction": {
+      "min_pmi": 3.5,
+      "ngram_range": [2, 3]
+    },
+    "themes": {
+      "любовь": {
+        "filter_keywords": ["любовь", "отношения", "страсть", "чувства", "влюблённость", "разрыв", "брак", "романтика", "сердце", "встреча"],
+        "min_sentences": 100
+      },
+      "успех": {
+        "filter_keywords": ["успех", "карьера", "мотивация", "достижение", "цель", "работа", "бизнес", "деньги", "рост", "лидерство"],
+        "min_sentences": 100
+      },
+      "здоровье": {
+        "filter_keywords": ["здоровье", "болезнь", "лечение", "зож", "спорт", "питание", "врач", "симптом", "физическое", "психическое"],
+        "min_sentences": 100
+      },
+      "семья": {
+        "filter_keywords": ["семья", "дети", "брак", "родители", "воспитание", "дом", "родственники", "супруг", "ребёнок", "традиции"],
+        "min_sentences": 100
+      },
+      "молодежь": {
+        "filter_keywords": ["молодёжь", "студенты", "подростки", "взросление", "субкультура", "тусовка", "учёба", "друзья", "идентичность", "будущее"],
+        "min_sentences": 100
+      }
+    }
+  }
