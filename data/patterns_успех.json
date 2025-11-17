@@ -1,0 +1,653 @@
+[
+  {
+    "ngram": "новый год успех здоровье",
+    "count": 12,
+    "doc_freq": 12,
+    "pmi": 19.022513752365352,
+    "meaningful_words": [
+      "новый",
+      "год",
+      "успех",
+      "здоровье"
+    ],
+    "length": 4
+  },
+  {
+    "ngram": "поздравлять день рождение",
+    "count": 10,
+    "doc_freq": 10,
+    "pmi": 16.605920987679262,
+    "meaningful_words": [
+      "поздравлять",
+      "день",
+      "рождение"
+    ],
+    "length": 3
+  },
+  {
+    "ngram": "день рождение успех",
+    "count": 13,
+    "doc_freq": 13,
+    "pmi": 12.044937349892544,
+    "meaningful_words": [
+      "день",
+      "рождение",
+      "успех"
+    ],
+    "length": 3
+  },
+  {
+    "ngram": "партия единый россия",
+    "count": 31,
+    "doc_freq": 25,
+    "pmi": 11.331432754548128,
+    "meaningful_words": [
+      "партия",
+      "единый",
+      "россия"
+    ],
+    "length": 3
+  },
+  {
+    "ngram": "точка зрение",
+    "count": 36,
+    "doc_freq": 24,
+    "pmi": 9.473140628340879,
+    "meaningful_words": [
+      "точка",
+      "зрение"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "владимир вольфович",
+    "count": 12,
+    "doc_freq": 12,
+    "pmi": 8.858165558553283,
+    "meaningful_words": [
+      "владимир",
+      "вольфович"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "крайний мера",
+    "count": 14,
+    "doc_freq": 13,
+    "pmi": 8.63196792089986,
+    "meaningful_words": [
+      "крайний",
+      "мера"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "оригинал взять",
+    "count": 27,
+    "doc_freq": 25,
+    "pmi": 8.244836418190902,
+    "meaningful_words": [
+      "оригинал",
+      "взять"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "российский федерация",
+    "count": 25,
+    "doc_freq": 15,
+    "pmi": 7.5502521753356735,
+    "meaningful_words": [
+      "российский",
+      "федерация"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "сотня тысяча",
+    "count": 13,
+    "doc_freq": 10,
+    "pmi": 6.943648035675382,
+    "meaningful_words": [
+      "сотня",
+      "тысяча"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "внешний политика",
+    "count": 18,
+    "doc_freq": 11,
+    "pmi": 6.865254983339604,
+    "meaningful_words": [
+      "внешний",
+      "политика"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "советский союз",
+    "count": 19,
+    "doc_freq": 11,
+    "pmi": 6.216275989747292,
+    "meaningful_words": [
+      "советский",
+      "союз"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "второй мировой",
+    "count": 15,
+    "doc_freq": 11,
+    "pmi": 6.212274059189796,
+    "meaningful_words": [
+      "второй",
+      "мировой"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "речь идти",
+    "count": 15,
+    "doc_freq": 13,
+    "pmi": 6.001707073250137,
+    "meaningful_words": [
+      "речь",
+      "идти"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "гражданский война",
+    "count": 21,
+    "doc_freq": 15,
+    "pmi": 5.920093307696486,
+    "meaningful_words": [
+      "гражданский",
+      "война"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "первый очередь",
+    "count": 18,
+    "doc_freq": 15,
+    "pmi": 5.712967643013348,
+    "meaningful_words": [
+      "первый",
+      "очередь"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "принять решение",
+    "count": 12,
+    "doc_freq": 10,
+    "pmi": 5.705314070469913,
+    "meaningful_words": [
+      "принять",
+      "решение"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "кпрф лдпр",
+    "count": 10,
+    "doc_freq": 10,
+    "pmi": 5.553605434631944,
+    "meaningful_words": [
+      "кпрф",
+      "лдпр"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "голосовать кпрф",
+    "count": 14,
+    "doc_freq": 10,
+    "pmi": 5.5182000985007456,
+    "meaningful_words": [
+      "голосовать",
+      "кпрф"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "так далее",
+    "count": 47,
+    "doc_freq": 35,
+    "pmi": 5.4415200141897655,
+    "meaningful_words": [
+      "так",
+      "далее"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "переменный успех",
+    "count": 12,
+    "doc_freq": 12,
+    "pmi": 5.421170638042021,
+    "meaningful_words": [
+      "переменный",
+      "успех"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "справедливый россия",
+    "count": 23,
+    "doc_freq": 17,
+    "pmi": 5.361786438976382,
+    "meaningful_words": [
+      "справедливый",
+      "россия"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "мировой война",
+    "count": 14,
+    "doc_freq": 11,
+    "pmi": 5.335130806975329,
+    "meaningful_words": [
+      "мировой",
+      "война"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "головокружение успех",
+    "count": 11,
+    "doc_freq": 11,
+    "pmi": 5.295639755958162,
+    "meaningful_words": [
+      "головокружение",
+      "успех"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "президент рф",
+    "count": 12,
+    "doc_freq": 11,
+    "pmi": 5.204546697165185,
+    "meaningful_words": [
+      "президент",
+      "рф"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "увенчаться успех",
+    "count": 11,
+    "doc_freq": 11,
+    "pmi": 5.180162538538226,
+    "meaningful_words": [
+      "увенчаться",
+      "успех"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "2014 год",
+    "count": 32,
+    "doc_freq": 13,
+    "pmi": 5.166612626747263,
+    "meaningful_words": [
+      "2014",
+      "год"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "больший часть",
+    "count": 15,
+    "doc_freq": 15,
+    "pmi": 5.05601579562694,
+    "meaningful_words": [
+      "больший",
+      "часть"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "партия рост",
+    "count": 30,
+    "doc_freq": 25,
+    "pmi": 4.89320008409967,
+    "meaningful_words": [
+      "партия",
+      "рост"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "2016 год",
+    "count": 17,
+    "doc_freq": 10,
+    "pmi": 4.821116060721495,
+    "meaningful_words": [
+      "2016",
+      "год"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "год назад",
+    "count": 34,
+    "doc_freq": 31,
+    "pmi": 4.76864864082736,
+    "meaningful_words": [
+      "год",
+      "назад"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "личный жизнь",
+    "count": 11,
+    "doc_freq": 11,
+    "pmi": 4.585519557935198,
+    "meaningful_words": [
+      "личный",
+      "жизнь"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "партия родина",
+    "count": 20,
+    "doc_freq": 15,
+    "pmi": 4.55515232384903,
+    "meaningful_words": [
+      "партия",
+      "родина"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "совсем другой",
+    "count": 12,
+    "doc_freq": 12,
+    "pmi": 4.516969129961143,
+    "meaningful_words": [
+      "совсем",
+      "другой"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "настоящий время",
+    "count": 17,
+    "doc_freq": 14,
+    "pmi": 4.477858472810898,
+    "meaningful_words": [
+      "настоящий",
+      "время"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "очень важный",
+    "count": 16,
+    "doc_freq": 15,
+    "pmi": 4.460661689059188,
+    "meaningful_words": [
+      "очень",
+      "важный"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "иметь вид",
+    "count": 13,
+    "doc_freq": 12,
+    "pmi": 4.209802747155078,
+    "meaningful_words": [
+      "иметь",
+      "вид"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "сам дело",
+    "count": 44,
+    "doc_freq": 37,
+    "pmi": 4.116675911605358,
+    "meaningful_words": [
+      "дело"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "очень интересный",
+    "count": 13,
+    "doc_freq": 12,
+    "pmi": 4.084480125597367,
+    "meaningful_words": [
+      "очень",
+      "интересный"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "самый главный",
+    "count": 12,
+    "doc_freq": 11,
+    "pmi": 4.038093887629678,
+    "meaningful_words": [
+      "самый",
+      "главный"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "так называть",
+    "count": 19,
+    "doc_freq": 17,
+    "pmi": 4.03667828201681,
+    "meaningful_words": [
+      "так",
+      "называть"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "желать успех",
+    "count": 42,
+    "doc_freq": 42,
+    "pmi": 3.955507065693209,
+    "meaningful_words": [
+      "желать",
+      "успех"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "шанс успех",
+    "count": 16,
+    "doc_freq": 16,
+    "pmi": 3.897608681985008,
+    "meaningful_words": [
+      "шанс",
+      "успех"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "удача успех",
+    "count": 16,
+    "doc_freq": 16,
+    "pmi": 3.836208137320865,
+    "meaningful_words": [
+      "удача",
+      "успех"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "уже давно",
+    "count": 10,
+    "doc_freq": 10,
+    "pmi": 3.8308895634797597,
+    "meaningful_words": [
+      "давно"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "очень много",
+    "count": 12,
+    "doc_freq": 11,
+    "pmi": 3.8157566478817495,
+    "meaningful_words": [
+      "очень",
+      "много"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "русский народ",
+    "count": 18,
+    "doc_freq": 12,
+    "pmi": 3.796268373148296,
+    "meaningful_words": [
+      "русский",
+      "народ"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "здоровье успех",
+    "count": 19,
+    "doc_freq": 19,
+    "pmi": 3.786455102123765,
+    "meaningful_words": [
+      "здоровье",
+      "успех"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "другой сторона",
+    "count": 20,
+    "doc_freq": 15,
+    "pmi": 3.734560565033769,
+    "meaningful_words": [
+      "другой",
+      "сторона"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "партия яблоко",
+    "count": 18,
+    "doc_freq": 17,
+    "pmi": 3.666183636237774,
+    "meaningful_words": [
+      "партия",
+      "яблоко"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "добиться успех",
+    "count": 18,
+    "doc_freq": 18,
+    "pmi": 3.5036327982339937,
+    "meaningful_words": [
+      "добиться",
+      "успех"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "мочь добиться",
+    "count": 10,
+    "doc_freq": 10,
+    "pmi": 3.411531214380101,
+    "meaningful_words": [
+      "мочь",
+      "добиться"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "политический партия",
+    "count": 21,
+    "doc_freq": 13,
+    "pmi": 3.3229788817199966,
+    "meaningful_words": [
+      "политический",
+      "партия"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "успех удача",
+    "count": 11,
+    "doc_freq": 11,
+    "pmi": 3.295639755958162,
+    "meaningful_words": [
+      "успех",
+      "удача"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "лидер партия",
+    "count": 11,
+    "doc_freq": 11,
+    "pmi": 3.2072290204287235,
+    "meaningful_words": [
+      "лидер",
+      "партия"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "счастие успех",
+    "count": 11,
+    "doc_freq": 11,
+    "pmi": 3.1801625385382257,
+    "meaningful_words": [
+      "счастие",
+      "успех"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "еще раз",
+    "count": 22,
+    "doc_freq": 19,
+    "pmi": 3.1087501133318023,
+    "meaningful_words": [
+      "раз"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "последний год",
+    "count": 35,
+    "doc_freq": 30,
+    "pmi": 3.0555813143585184,
+    "meaningful_words": [
+      "последний",
+      "год"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "можно сказать",
+    "count": 13,
+    "doc_freq": 13,
+    "pmi": 3.003887457507522,
+    "meaningful_words": [
+      "можно",
+      "сказать"
+    ],
+    "length": 2
+  }
+]

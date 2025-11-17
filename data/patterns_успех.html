@@ -1,0 +1,307 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "count": 12, "doc_freq": 12, "id": 0, "label": "\u043d\u043e\u0432\u044b\u0439 \u0433\u043e\u0434 \u0443\u0441\u043f\u0435\u0445 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435", "length": 4, "pmi": 19.022513752365352, "shape": "dot", "size": 40, "title": "\u043d\u043e\u0432\u044b\u0439 \u0433\u043e\u0434 \u0443\u0441\u043f\u0435\u0445 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435 (pmi=19.02, doc_freq=12, length=4)", "words": ["\u043d\u043e\u0432\u044b\u0439", "\u0433\u043e\u0434", "\u0443\u0441\u043f\u0435\u0445", "\u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435"]}, {"color": "#97c2fc", "count": 13, "doc_freq": 13, "id": 2, "label": "\u0434\u0435\u043d\u044c \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u0435 \u0443\u0441\u043f\u0435\u0445", "length": 3, "pmi": 12.044937349892544, "shape": "dot", "size": 40, "title": "\u0434\u0435\u043d\u044c \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u0435 \u0443\u0441\u043f\u0435\u0445 (pmi=12.04, doc_freq=13, length=3)", "words": ["\u0434\u0435\u043d\u044c", "\u0440\u043e\u0436\u0434\u0435\u043d\u0438\u0435", "\u0443\u0441\u043f\u0435\u0445"]}, {"color": "#97c2fc", "count": 12, "doc_freq": 12, "id": 20, "label": "\u043f\u0435\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0439 \u0443\u0441\u043f\u0435\u0445", "length": 2, "pmi": 5.421170638042021, "shape": "dot", "size": 26, "title": "\u043f\u0435\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0439 \u0443\u0441\u043f\u0435\u0445 (pmi=5.42, doc_freq=12, length=2)", "words": ["\u043f\u0435\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0439", "\u0443\u0441\u043f\u0435\u0445"]}, {"color": "#97c2fc", "count": 16, "doc_freq": 16, "id": 43, "label": "\u0443\u0434\u0430\u0447\u0430 \u0443\u0441\u043f\u0435\u0445", "length": 2, "pmi": 3.836208137320865, "shape": "dot", "size": 25, "title": "\u0443\u0434\u0430\u0447\u0430 \u0443\u0441\u043f\u0435\u0445 (pmi=3.84, doc_freq=16, length=2)", "words": ["\u0443\u0434\u0430\u0447\u0430", "\u0443\u0441\u043f\u0435\u0445"]}, {"color": "#97c2fc", "count": 19, "doc_freq": 19, "id": 47, "label": "\u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435 \u0443\u0441\u043f\u0435\u0445", "length": 2, "pmi": 3.786455102123765, "shape": "dot", "size": 27, "title": "\u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435 \u0443\u0441\u043f\u0435\u0445 (pmi=3.79, doc_freq=19, length=2)", "words": ["\u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435", "\u0443\u0441\u043f\u0435\u0445"]}, {"color": "#97c2fc", "count": 11, "doc_freq": 11, "id": 53, "label": "\u0443\u0441\u043f\u0435\u0445 \u0443\u0434\u0430\u0447\u0430", "length": 2, "pmi": 3.295639755958162, "shape": "dot", "size": 22, "title": "\u0443\u0441\u043f\u0435\u0445 \u0443\u0434\u0430\u0447\u0430 (pmi=3.30, doc_freq=11, length=2)", "words": ["\u0443\u0441\u043f\u0435\u0445", "\u0443\u0434\u0430\u0447\u0430"]}, {"color": "#97c2fc", "count": 10, "doc_freq": 10, "id": 1, "label": "\u043f\u043e\u0437\u0434\u0440\u0430\u0432\u043b\u044f\u0442\u044c \u0434\u0435\u043d\u044c \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u0435", "length": 3, "pmi": 16.605920987679262, "shape": "dot", "size": 40, "title": "\u043f\u043e\u0437\u0434\u0440\u0430\u0432\u043b\u044f\u0442\u044c \u0434\u0435\u043d\u044c \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u0435 (pmi=16.61, doc_freq=10, length=3)", "words": ["\u043f\u043e\u0437\u0434\u0440\u0430\u0432\u043b\u044f\u0442\u044c", "\u0434\u0435\u043d\u044c", "\u0440\u043e\u0436\u0434\u0435\u043d\u0438\u0435"]}, {"color": "#97c2fc", "count": 11, "doc_freq": 11, "id": 23, "label": "\u0433\u043e\u043b\u043e\u0432\u043e\u043a\u0440\u0443\u0436\u0435\u043d\u0438\u0435 \u0443\u0441\u043f\u0435\u0445", "length": 2, "pmi": 5.295639755958162, "shape": "dot", "size": 26, "title": "\u0433\u043e\u043b\u043e\u0432\u043e\u043a\u0440\u0443\u0436\u0435\u043d\u0438\u0435 \u0443\u0441\u043f\u0435\u0445 (pmi=5.30, doc_freq=11, length=2)", "words": ["\u0433\u043e\u043b\u043e\u0432\u043e\u043a\u0440\u0443\u0436\u0435\u043d\u0438\u0435", "\u0443\u0441\u043f\u0435\u0445"]}, {"color": "#97c2fc", "count": 11, "doc_freq": 11, "id": 25, "label": "\u0443\u0432\u0435\u043d\u0447\u0430\u0442\u044c\u0441\u044f \u0443\u0441\u043f\u0435\u0445", "length": 2, "pmi": 5.180162538538226, "shape": "dot", "size": 25, "title": "\u0443\u0432\u0435\u043d\u0447\u0430\u0442\u044c\u0441\u044f \u0443\u0441\u043f\u0435\u0445 (pmi=5.18, doc_freq=11, length=2)", "words": ["\u0443\u0432\u0435\u043d\u0447\u0430\u0442\u044c\u0441\u044f", "\u0443\u0441\u043f\u0435\u0445"]}, {"color": "#97c2fc", "count": 42, "doc_freq": 42, "id": 41, "label": "\u0436\u0435\u043b\u0430\u0442\u044c \u0443\u0441\u043f\u0435\u0445", "length": 2, "pmi": 3.955507065693209, "shape": "dot", "size": 38, "title": "\u0436\u0435\u043b\u0430\u0442\u044c \u0443\u0441\u043f\u0435\u0445 (pmi=3.96, doc_freq=42, length=2)", "words": ["\u0436\u0435\u043b\u0430\u0442\u044c", "\u0443\u0441\u043f\u0435\u0445"]}, {"color": "#97c2fc", "count": 16, "doc_freq": 16, "id": 42, "label": "\u0448\u0430\u043d\u0441 \u0443\u0441\u043f\u0435\u0445", "length": 2, "pmi": 3.897608681985008, "shape": "dot", "size": 25, "title": "\u0448\u0430\u043d\u0441 \u0443\u0441\u043f\u0435\u0445 (pmi=3.90, doc_freq=16, length=2)", "words": ["\u0448\u0430\u043d\u0441", "\u0443\u0441\u043f\u0435\u0445"]}, {"color": "#97c2fc", "count": 18, "doc_freq": 18, "id": 50, "label": "\u0434\u043e\u0431\u0438\u0442\u044c\u0441\u044f \u0443\u0441\u043f\u0435\u0445", "length": 2, "pmi": 3.5036327982339937, "shape": "dot", "size": 26, "title": "\u0434\u043e\u0431\u0438\u0442\u044c\u0441\u044f \u0443\u0441\u043f\u0435\u0445 (pmi=3.50, doc_freq=18, length=2)", "words": ["\u0434\u043e\u0431\u0438\u0442\u044c\u0441\u044f", "\u0443\u0441\u043f\u0435\u0445"]}, {"color": "#97c2fc", "count": 11, "doc_freq": 11, "id": 55, "label": "\u0441\u0447\u0430\u0441\u0442\u0438\u0435 \u0443\u0441\u043f\u0435\u0445", "length": 2, "pmi": 3.1801625385382257, "shape": "dot", "size": 21, "title": "\u0441\u0447\u0430\u0441\u0442\u0438\u0435 \u0443\u0441\u043f\u0435\u0445 (pmi=3.18, doc_freq=11, length=2)", "words": ["\u0441\u0447\u0430\u0441\u0442\u0438\u0435", "\u0443\u0441\u043f\u0435\u0445"]}, {"color": "#97c2fc", "count": 31, "doc_freq": 25, "id": 3, "label": "\u043f\u0430\u0440\u0442\u0438\u044f \u0435\u0434\u0438\u043d\u044b\u0439 \u0440\u043e\u0441\u0441\u0438\u044f", "length": 3, "pmi": 11.331432754548128, "shape": "dot", "size": 40, "title": "\u043f\u0430\u0440\u0442\u0438\u044f \u0435\u0434\u0438\u043d\u044b\u0439 \u0440\u043e\u0441\u0441\u0438\u044f (pmi=11.33, doc_freq=25, length=3)", "words": ["\u043f\u0430\u0440\u0442\u0438\u044f", "\u0435\u0434\u0438\u043d\u044b\u0439", "\u0440\u043e\u0441\u0441\u0438\u044f"]}, {"color": "#97c2fc", "count": 19, "doc_freq": 11, "id": 11, "label": "\u0441\u043e\u0432\u0435\u0442\u0441\u043a\u0438\u0439 \u0441\u043e\u044e\u0437", "length": 2, "pmi": 6.216275989747292, "shape": "dot", "size": 27, "title": "\u0441\u043e\u0432\u0435\u0442\u0441\u043a\u0438\u0439 \u0441\u043e\u044e\u0437 (pmi=6.22, doc_freq=11, length=2)", "words": ["\u0441\u043e\u0432\u0435\u0442\u0441\u043a\u0438\u0439", "\u0441\u043e\u044e\u0437"]}, {"color": "#97c2fc", "count": 23, "doc_freq": 17, "id": 21, "label": "\u0441\u043f\u0440\u0430\u0432\u0435\u0434\u043b\u0438\u0432\u044b\u0439 \u0440\u043e\u0441\u0441\u0438\u044f", "length": 2, "pmi": 5.361786438976382, "shape": "dot", "size": 29, "title": "\u0441\u043f\u0440\u0430\u0432\u0435\u0434\u043b\u0438\u0432\u044b\u0439 \u0440\u043e\u0441\u0441\u0438\u044f (pmi=5.36, doc_freq=17, length=2)", "words": ["\u0441\u043f\u0440\u0430\u0432\u0435\u0434\u043b\u0438\u0432\u044b\u0439", "\u0440\u043e\u0441\u0441\u0438\u044f"]}, {"color": "#97c2fc", "count": 30, "doc_freq": 25, "id": 28, "label": "\u043f\u0430\u0440\u0442\u0438\u044f \u0440\u043e\u0441\u0442", "length": 2, "pmi": 4.89320008409967, "shape": "dot", "size": 32, "title": "\u043f\u0430\u0440\u0442\u0438\u044f \u0440\u043e\u0441\u0442 (pmi=4.89, doc_freq=25, length=2)", "words": ["\u043f\u0430\u0440\u0442\u0438\u044f", "\u0440\u043e\u0441\u0442"]}, {"color": "#97c2fc", "count": 20, "doc_freq": 15, "id": 32, "label": "\u043f\u0430\u0440\u0442\u0438\u044f \u0440\u043e\u0434\u0438\u043d\u0430", "length": 2, "pmi": 4.55515232384903, "shape": "dot", "size": 26, "title": "\u043f\u0430\u0440\u0442\u0438\u044f \u0440\u043e\u0434\u0438\u043d\u0430 (pmi=4.56, doc_freq=15, length=2)", "words": ["\u043f\u0430\u0440\u0442\u0438\u044f", "\u0440\u043e\u0434\u0438\u043d\u0430"]}, {"color": "#97c2fc", "count": 21, "doc_freq": 13, "id": 52, "label": "\u043f\u043e\u043b\u0438\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u043f\u0430\u0440\u0442\u0438\u044f", "length": 2, "pmi": 3.3229788817199966, "shape": "dot", "size": 23, "title": "\u043f\u043e\u043b\u0438\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u043f\u0430\u0440\u0442\u0438\u044f (pmi=3.32, doc_freq=13, length=2)", "words": ["\u043f\u043e\u043b\u0438\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439", "\u043f\u0430\u0440\u0442\u0438\u044f"]}, {"color": "#97c2fc", "count": 11, "doc_freq": 11, "id": 54, "label": "\u043b\u0438\u0434\u0435\u0440 \u043f\u0430\u0440\u0442\u0438\u044f", "length": 2, "pmi": 3.2072290204287235, "shape": "dot", "size": 21, "title": "\u043b\u0438\u0434\u0435\u0440 \u043f\u0430\u0440\u0442\u0438\u044f (pmi=3.21, doc_freq=11, length=2)", "words": ["\u043b\u0438\u0434\u0435\u0440", "\u043f\u0430\u0440\u0442\u0438\u044f"]}, {"color": "#97c2fc", "count": 12, "doc_freq": 12, "id": 5, "label": "\u0432\u043b\u0430\u0434\u0438\u043c\u0438\u0440 \u0432\u043e\u043b\u044c\u0444\u043e\u0432\u0438\u0447", "length": 2, "pmi": 8.858165558553283, "shape": "dot", "size": 33, "title": "\u0432\u043b\u0430\u0434\u0438\u043c\u0438\u0440 \u0432\u043e\u043b\u044c\u0444\u043e\u0432\u0438\u0447 (pmi=8.86, doc_freq=12, length=2)", "words": ["\u0432\u043b\u0430\u0434\u0438\u043c\u0438\u0440", "\u0432\u043e\u043b\u044c\u0444\u043e\u0432\u0438\u0447"]}, {"color": "#97c2fc", "count": 10, "doc_freq": 10, "id": 17, "label": "\u043a\u043f\u0440\u0444 \u043b\u0434\u043f\u0440", "length": 2, "pmi": 5.553605434631944, "shape": "dot", "size": 26, "title": "\u043a\u043f\u0440\u0444 \u043b\u0434\u043f\u0440 (pmi=5.55, doc_freq=10, length=2)", "words": ["\u043a\u043f\u0440\u0444", "\u043b\u0434\u043f\u0440"]}, {"color": "#97c2fc", "count": 14, "doc_freq": 10, "id": 18, "label": "\u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u0442\u044c \u043a\u043f\u0440\u0444", "length": 2, "pmi": 5.5182000985007456, "shape": "dot", "size": 26, "title": "\u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u0442\u044c \u043a\u043f\u0440\u0444 (pmi=5.52, doc_freq=10, length=2)", "words": ["\u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u0442\u044c", "\u043a\u043f\u0440\u0444"]}, {"color": "#97c2fc", "count": 12, "doc_freq": 11, "id": 24, "label": "\u043f\u0440\u0435\u0437\u0438\u0434\u0435\u043d\u0442 \u0440\u0444", "length": 2, "pmi": 5.204546697165185, "shape": "dot", "size": 25, "title": "\u043f\u0440\u0435\u0437\u0438\u0434\u0435\u043d\u0442 \u0440\u0444 (pmi=5.20, doc_freq=11, length=2)", "words": ["\u043f\u0440\u0435\u0437\u0438\u0434\u0435\u043d\u0442", "\u0440\u0444"]}, {"color": "#97c2fc", "count": 14, "doc_freq": 13, "id": 6, "label": "\u043a\u0440\u0430\u0439\u043d\u0438\u0439 \u043c\u0435\u0440\u0430", "length": 2, "pmi": 8.63196792089986, "shape": "dot", "size": 33, "title": "\u043a\u0440\u0430\u0439\u043d\u0438\u0439 \u043c\u0435\u0440\u0430 (pmi=8.63, doc_freq=13, length=2)", "words": ["\u043a\u0440\u0430\u0439\u043d\u0438\u0439", "\u043c\u0435\u0440\u0430"]}, {"color": "#97c2fc", "count": 27, "doc_freq": 25, "id": 7, "label": "\u043e\u0440\u0438\u0433\u0438\u043d\u0430\u043b \u0432\u0437\u044f\u0442\u044c", "length": 2, "pmi": 8.244836418190902, "shape": "dot", "size": 38, "title": "\u043e\u0440\u0438\u0433\u0438\u043d\u0430\u043b \u0432\u0437\u044f\u0442\u044c (pmi=8.24, doc_freq=25, length=2)", "words": ["\u043e\u0440\u0438\u0433\u0438\u043d\u0430\u043b", "\u0432\u0437\u044f\u0442\u044c"]}, {"color": "#97c2fc", "count": 15, "doc_freq": 13, "id": 13, "label": "\u0440\u0435\u0447\u044c \u0438\u0434\u0442\u0438", "length": 2, "pmi": 6.001707073250137, "shape": "dot", "size": 28, "title": "\u0440\u0435\u0447\u044c \u0438\u0434\u0442\u0438 (pmi=6.00, doc_freq=13, length=2)", "words": ["\u0440\u0435\u0447\u044c", "\u0438\u0434\u0442\u0438"]}, {"color": "#97c2fc", "count": 18, "doc_freq": 15, "id": 15, "label": "\u043f\u0435\u0440\u0432\u044b\u0439 \u043e\u0447\u0435\u0440\u0435\u0434\u044c", "length": 2, "pmi": 5.712967643013348, "shape": "dot", "size": 28, "title": "\u043f\u0435\u0440\u0432\u044b\u0439 \u043e\u0447\u0435\u0440\u0435\u0434\u044c (pmi=5.71, doc_freq=15, length=2)", "words": ["\u043f\u0435\u0440\u0432\u044b\u0439", "\u043e\u0447\u0435\u0440\u0435\u0434\u044c"]}, {"color": "#97c2fc", "count": 12, "doc_freq": 10, "id": 16, "label": "\u043f\u0440\u0438\u043d\u044f\u0442\u044c \u0440\u0435\u0448\u0435\u043d\u0438\u0435", "length": 2, "pmi": 5.705314070469913, "shape": "dot", "size": 26, "title": "\u043f\u0440\u0438\u043d\u044f\u0442\u044c \u0440\u0435\u0448\u0435\u043d\u0438\u0435 (pmi=5.71, doc_freq=10, length=2)", "words": ["\u043f\u0440\u0438\u043d\u044f\u0442\u044c", "\u0440\u0435\u0448\u0435\u043d\u0438\u0435"]}, {"color": "#97c2fc", "count": 15, "doc_freq": 15, "id": 27, "label": "\u0431\u043e\u043b\u044c\u0448\u0438\u0439 \u0447\u0430\u0441\u0442\u044c", "length": 2, "pmi": 5.05601579562694, "shape": "dot", "size": 27, "title": "\u0431\u043e\u043b\u044c\u0448\u0438\u0439 \u0447\u0430\u0441\u0442\u044c (pmi=5.06, doc_freq=15, length=2)", "words": ["\u0431\u043e\u043b\u044c\u0448\u0438\u0439", "\u0447\u0430\u0441\u0442\u044c"]}, {"color": "#97c2fc", "count": 12, "doc_freq": 12, "id": 33, "label": "\u0441\u043e\u0432\u0441\u0435\u043c \u0434\u0440\u0443\u0433\u043e\u0439", "length": 2, "pmi": 4.516969129961143, "shape": "dot", "size": 25, "title": "\u0441\u043e\u0432\u0441\u0435\u043c \u0434\u0440\u0443\u0433\u043e\u0439 (pmi=4.52, doc_freq=12, length=2)", "words": ["\u0441\u043e\u0432\u0441\u0435\u043c", "\u0434\u0440\u0443\u0433\u043e\u0439"]}, {"color": "#97c2fc", "count": 17, "doc_freq": 14, "id": 34, "label": "\u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0438\u0439 \u0432\u0440\u0435\u043c\u044f", "length": 2, "pmi": 4.477858472810898, "shape": "dot", "size": 25, "title": "\u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0438\u0439 \u0432\u0440\u0435\u043c\u044f (pmi=4.48, doc_freq=14, length=2)", "words": ["\u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0438\u0439", "\u0432\u0440\u0435\u043c\u044f"]}, {"color": "#97c2fc", "count": 16, "doc_freq": 15, "id": 35, "label": "\u043e\u0447\u0435\u043d\u044c \u0432\u0430\u0436\u043d\u044b\u0439", "length": 2, "pmi": 4.460661689059188, "shape": "dot", "size": 26, "title": "\u043e\u0447\u0435\u043d\u044c \u0432\u0430\u0436\u043d\u044b\u0439 (pmi=4.46, doc_freq=15, length=2)", "words": ["\u043e\u0447\u0435\u043d\u044c", "\u0432\u0430\u0436\u043d\u044b\u0439"]}, {"color": "#97c2fc", "count": 13, "doc_freq": 12, "id": 36, "label": "\u0438\u043c\u0435\u0442\u044c \u0432\u0438\u0434", "length": 2, "pmi": 4.209802747155078, "shape": "dot", "size": 24, "title": "\u0438\u043c\u0435\u0442\u044c \u0432\u0438\u0434 (pmi=4.21, doc_freq=12, length=2)", "words": ["\u0438\u043c\u0435\u0442\u044c", "\u0432\u0438\u0434"]}, {"color": "#97c2fc", "count": 44, "doc_freq": 37, "id": 37, "label": "\u0441\u0430\u043c \u0434\u0435\u043b\u043e", "length": 2, "pmi": 4.116675911605358, "shape": "dot", "size": 36, "title": "\u0441\u0430\u043c \u0434\u0435\u043b\u043e (pmi=4.12, doc_freq=37, length=2)", "words": ["\u0441\u0430\u043c", "\u0434\u0435\u043b\u043e"]}, {"color": "#97c2fc", "count": 12, "doc_freq": 11, "id": 39, "label": "\u0441\u0430\u043c\u044b\u0439 \u0433\u043b\u0430\u0432\u043d\u044b\u0439", "length": 2, "pmi": 4.038093887629678, "shape": "dot", "size": 23, "title": "\u0441\u0430\u043c\u044b\u0439 \u0433\u043b\u0430\u0432\u043d\u044b\u0439 (pmi=4.04, doc_freq=11, length=2)", "words": ["\u0441\u0430\u043c\u044b\u0439", "\u0433\u043b\u0430\u0432\u043d\u044b\u0439"]}, {"color": "#97c2fc", "count": 20, "doc_freq": 15, "id": 48, "label": "\u0434\u0440\u0443\u0433\u043e\u0439 \u0441\u0442\u043e\u0440\u043e\u043d\u0430", "length": 2, "pmi": 3.734560565033769, "shape": "dot", "size": 24, "title": "\u0434\u0440\u0443\u0433\u043e\u0439 \u0441\u0442\u043e\u0440\u043e\u043d\u0430 (pmi=3.73, doc_freq=15, length=2)", "words": ["\u0434\u0440\u0443\u0433\u043e\u0439", "\u0441\u0442\u043e\u0440\u043e\u043d\u0430"]}, {"color": "#97c2fc", "count": 10, "doc_freq": 10, "id": 51, "label": "\u043c\u043e\u0447\u044c \u0434\u043e\u0431\u0438\u0442\u044c\u0441\u044f", "length": 2, "pmi": 3.411531214380101, "shape": "dot", "size": 21, "title": "\u043c\u043e\u0447\u044c \u0434\u043e\u0431\u0438\u0442\u044c\u0441\u044f (pmi=3.41, doc_freq=10, length=2)", "words": ["\u043c\u043e\u0447\u044c", "\u0434\u043e\u0431\u0438\u0442\u044c\u0441\u044f"]}, {"color": "#97c2fc", "count": 25, "doc_freq": 15, "id": 8, "label": "\u0440\u043e\u0441\u0441\u0438\u0439\u0441\u043a\u0438\u0439 \u0444\u0435\u0434\u0435\u0440\u0430\u0446\u0438\u044f", "length": 2, "pmi": 7.5502521753356735, "shape": "dot", "size": 32, "title": "\u0440\u043e\u0441\u0441\u0438\u0439\u0441\u043a\u0438\u0439 \u0444\u0435\u0434\u0435\u0440\u0430\u0446\u0438\u044f (pmi=7.55, doc_freq=15, length=2)", "words": ["\u0440\u043e\u0441\u0441\u0438\u0439\u0441\u043a\u0438\u0439", "\u0444\u0435\u0434\u0435\u0440\u0430\u0446\u0438\u044f"]}, {"color": "#97c2fc", "count": 18, "doc_freq": 11, "id": 10, "label": "\u0432\u043d\u0435\u0448\u043d\u0438\u0439 \u043f\u043e\u043b\u0438\u0442\u0438\u043a\u0430", "length": 2, "pmi": 6.865254983339604, "shape": "dot", "size": 29, "title": "\u0432\u043d\u0435\u0448\u043d\u0438\u0439 \u043f\u043e\u043b\u0438\u0442\u0438\u043a\u0430 (pmi=6.87, doc_freq=11, length=2)", "words": ["\u0432\u043d\u0435\u0448\u043d\u0438\u0439", "\u043f\u043e\u043b\u0438\u0442\u0438\u043a\u0430"]}, {"color": "#97c2fc", "count": 15, "doc_freq": 11, "id": 12, "label": "\u0432\u0442\u043e\u0440\u043e\u0439 \u043c\u0438\u0440\u043e\u0432\u043e\u0439", "length": 2, "pmi": 6.212274059189796, "shape": "dot", "size": 27, "title": "\u0432\u0442\u043e\u0440\u043e\u0439 \u043c\u0438\u0440\u043e\u0432\u043e\u0439 (pmi=6.21, doc_freq=11, length=2)", "words": ["\u0432\u0442\u043e\u0440\u043e\u0439", "\u043c\u0438\u0440\u043e\u0432\u043e\u0439"]}, {"color": "#97c2fc", "count": 14, "doc_freq": 11, "id": 22, "label": "\u043c\u0438\u0440\u043e\u0432\u043e\u0439 \u0432\u043e\u0439\u043d\u0430", "length": 2, "pmi": 5.335130806975329, "shape": "dot", "size": 26, "title": "\u043c\u0438\u0440\u043e\u0432\u043e\u0439 \u0432\u043e\u0439\u043d\u0430 (pmi=5.34, doc_freq=11, length=2)", "words": ["\u043c\u0438\u0440\u043e\u0432\u043e\u0439", "\u0432\u043e\u0439\u043d\u0430"]}, {"color": "#97c2fc", "count": 47, "doc_freq": 35, "id": 19, "label": "\u0442\u0430\u043a \u0434\u0430\u043b\u0435\u0435", "length": 2, "pmi": 5.4415200141897655, "shape": "dot", "size": 38, "title": "\u0442\u0430\u043a \u0434\u0430\u043b\u0435\u0435 (pmi=5.44, doc_freq=35, length=2)", "words": ["\u0442\u0430\u043a", "\u0434\u0430\u043b\u0435\u0435"]}, {"color": "#97c2fc", "count": 19, "doc_freq": 17, "id": 40, "label": "\u0442\u0430\u043a \u043d\u0430\u0437\u044b\u0432\u0430\u0442\u044c", "length": 2, "pmi": 4.03667828201681, "shape": "dot", "size": 26, "title": "\u0442\u0430\u043a \u043d\u0430\u0437\u044b\u0432\u0430\u0442\u044c (pmi=4.04, doc_freq=17, length=2)", "words": ["\u0442\u0430\u043a", "\u043d\u0430\u0437\u044b\u0432\u0430\u0442\u044c"]}, {"color": "#97c2fc", "count": 22, "doc_freq": 19, "id": 56, "label": "\u0435\u0449\u0435 \u0440\u0430\u0437", "length": 2, "pmi": 3.1087501133318023, "shape": "dot", "size": 25, "title": "\u0435\u0449\u0435 \u0440\u0430\u0437 (pmi=3.11, doc_freq=19, length=2)", "words": ["\u0435\u0449\u0435", "\u0440\u0430\u0437"]}, {"color": "#97c2fc", "count": 13, "doc_freq": 13, "id": 58, "label": "\u043c\u043e\u0436\u043d\u043e \u0441\u043a\u0430\u0437\u0430\u0442\u044c", "length": 2, "pmi": 3.003887457507522, "shape": "dot", "size": 22, "title": "\u043c\u043e\u0436\u043d\u043e \u0441\u043a\u0430\u0437\u0430\u0442\u044c (pmi=3.00, doc_freq=13, length=2)", "words": ["\u043c\u043e\u0436\u043d\u043e", "\u0441\u043a\u0430\u0437\u0430\u0442\u044c"]}, {"color": "#97c2fc", "count": 21, "doc_freq": 15, "id": 14, "label": "\u0433\u0440\u0430\u0436\u0434\u0430\u043d\u0441\u043a\u0438\u0439 \u0432\u043e\u0439\u043d\u0430", "length": 2, "pmi": 5.920093307696486, "shape": "dot", "size": 29, "title": "\u0433\u0440\u0430\u0436\u0434\u0430\u043d\u0441\u043a\u0438\u0439 \u0432\u043e\u0439\u043d\u0430 (pmi=5.92, doc_freq=15, length=2)", "words": ["\u0433\u0440\u0430\u0436\u0434\u0430\u043d\u0441\u043a\u0438\u0439", "\u0432\u043e\u0439\u043d\u0430"]}, {"color": "#97c2fc", "count": 34, "doc_freq": 31, "id": 30, "label": "\u0433\u043e\u0434 \u043d\u0430\u0437\u0430\u0434", "length": 2, "pmi": 4.76864864082736, "shape": "dot", "size": 35, "title": "\u0433\u043e\u0434 \u043d\u0430\u0437\u0430\u0434 (pmi=4.77, doc_freq=31, length=2)", "words": ["\u0433\u043e\u0434", "\u043d\u0430\u0437\u0430\u0434"]}, {"color": "#97c2fc", "count": 35, "doc_freq": 30, "id": 57, "label": "\u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0439 \u0433\u043e\u0434", "length": 2, "pmi": 3.0555813143585184, "shape": "dot", "size": 31, "title": "\u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0439 \u0433\u043e\u0434 (pmi=3.06, doc_freq=30, length=2)", "words": ["\u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0439", "\u0433\u043e\u0434"]}, {"color": "#97c2fc", "count": 18, "doc_freq": 17, "id": 49, "label": "\u043f\u0430\u0440\u0442\u0438\u044f \u044f\u0431\u043b\u043e\u043a\u043e", "length": 2, "pmi": 3.666183636237774, "shape": "dot", "size": 25, "title": "\u043f\u0430\u0440\u0442\u0438\u044f \u044f\u0431\u043b\u043e\u043a\u043e (pmi=3.67, doc_freq=17, length=2)", "words": ["\u043f\u0430\u0440\u0442\u0438\u044f", "\u044f\u0431\u043b\u043e\u043a\u043e"]}, {"color": "#97c2fc", "count": 12, "doc_freq": 11, "id": 45, "label": "\u043e\u0447\u0435\u043d\u044c \u043c\u043d\u043e\u0433\u043e", "length": 2, "pmi": 3.8157566478817495, "shape": "dot", "size": 23, "title": "\u043e\u0447\u0435\u043d\u044c \u043c\u043d\u043e\u0433\u043e (pmi=3.82, doc_freq=11, length=2)", "words": ["\u043e\u0447\u0435\u043d\u044c", "\u043c\u043d\u043e\u0433\u043e"]}, {"color": "#97c2fc", "count": 18, "doc_freq": 12, "id": 46, "label": "\u0440\u0443\u0441\u0441\u043a\u0438\u0439 \u043d\u0430\u0440\u043e\u0434", "length": 2, "pmi": 3.796268373148296, "shape": "dot", "size": 23, "title": "\u0440\u0443\u0441\u0441\u043a\u0438\u0439 \u043d\u0430\u0440\u043e\u0434 (pmi=3.80, doc_freq=12, length=2)", "words": ["\u0440\u0443\u0441\u0441\u043a\u0438\u0439", "\u043d\u0430\u0440\u043e\u0434"]}, {"color": "#97c2fc", "count": 32, "doc_freq": 13, "id": 26, "label": "2014 \u0433\u043e\u0434", "length": 2, "pmi": 5.166612626747263, "shape": "dot", "size": 26, "title": "2014 \u0433\u043e\u0434 (pmi=5.17, doc_freq=13, length=2)", "words": ["2014", "\u0433\u043e\u0434"]}, {"color": "#97c2fc", "count": 17, "doc_freq": 10, "id": 29, "label": "2016 \u0433\u043e\u0434", "length": 2, "pmi": 4.821116060721495, "shape": "dot", "size": 24, "title": "2016 \u0433\u043e\u0434 (pmi=4.82, doc_freq=10, length=2)", "words": ["2016", "\u0433\u043e\u0434"]}, {"color": "#97c2fc", "count": 10, "doc_freq": 10, "id": 44, "label": "\u0443\u0436\u0435 \u0434\u0430\u0432\u043d\u043e", "length": 2, "pmi": 3.8308895634797597, "shape": "dot", "size": 22, "title": "\u0443\u0436\u0435 \u0434\u0430\u0432\u043d\u043e (pmi=3.83, doc_freq=10, length=2)", "words": ["\u0443\u0436\u0435", "\u0434\u0430\u0432\u043d\u043e"]}, {"color": "#97c2fc", "count": 13, "doc_freq": 12, "id": 38, "label": "\u043e\u0447\u0435\u043d\u044c \u0438\u043d\u0442\u0435\u0440\u0435\u0441\u043d\u044b\u0439", "length": 2, "pmi": 4.084480125597367, "shape": "dot", "size": 24, "title": "\u043e\u0447\u0435\u043d\u044c \u0438\u043d\u0442\u0435\u0440\u0435\u0441\u043d\u044b\u0439 (pmi=4.08, doc_freq=12, length=2)", "words": ["\u043e\u0447\u0435\u043d\u044c", "\u0438\u043d\u0442\u0435\u0440\u0435\u0441\u043d\u044b\u0439"]}, {"color": "#97c2fc", "count": 36, "doc_freq": 24, "id": 4, "label": "\u0442\u043e\u0447\u043a\u0430 \u0437\u0440\u0435\u043d\u0438\u0435", "length": 2, "pmi": 9.473140628340879, "shape": "dot", "size": 40, "title": "\u0442\u043e\u0447\u043a\u0430 \u0437\u0440\u0435\u043d\u0438\u0435 (pmi=9.47, doc_freq=24, length=2)", "words": ["\u0442\u043e\u0447\u043a\u0430", "\u0437\u0440\u0435\u043d\u0438\u0435"]}, {"color": "#97c2fc", "count": 13, "doc_freq": 10, "id": 9, "label": "\u0441\u043e\u0442\u043d\u044f \u0442\u044b\u0441\u044f\u0447\u0430", "length": 2, "pmi": 6.943648035675382, "shape": "dot", "size": 28.887296071350764, "title": "\u0441\u043e\u0442\u043d\u044f \u0442\u044b\u0441\u044f\u0447\u0430 (pmi=6.94, doc_freq=10, length=2)", "words": ["\u0441\u043e\u0442\u043d\u044f", "\u0442\u044b\u0441\u044f\u0447\u0430"]}, {"color": "#97c2fc", "count": 11, "doc_freq": 11, "id": 31, "label": "\u043b\u0438\u0447\u043d\u044b\u0439 \u0436\u0438\u0437\u043d\u044c", "length": 2, "pmi": 4.585519557935198, "shape": "dot", "size": 24.671039115870396, "title": "\u043b\u0438\u0447\u043d\u044b\u0439 \u0436\u0438\u0437\u043d\u044c (pmi=4.59, doc_freq=11, length=2)", "words": ["\u043b\u0438\u0447\u043d\u044b\u0439", "\u0436\u0438\u0437\u043d\u044c"]}]);
+                  edges = new vis.DataSet([{"color": "rgb(0,255,120)", "from": 0, "title": "sim=0.777", "to": 2, "width": 0.777268648147583}, {"color": "rgb(0,255,120)", "from": 0, "title": "sim=0.757", "to": 20, "width": 0.7567493319511414}, {"color": "rgb(0,255,120)", "from": 0, "title": "sim=0.757", "to": 43, "width": 0.7565290927886963}, {"color": "rgb(0,255,120)", "from": 0, "title": "sim=0.838", "to": 47, "width": 0.8376758098602295}, {"color": "rgb(0,255,120)", "from": 0, "title": "sim=0.752", "to": 53, "width": 0.7524073719978333}, {"color": "rgb(0,255,120)", "from": 1, "title": "sim=0.850", "to": 2, "width": 0.8498082160949707}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.856", "to": 20, "width": 0.8560656309127808}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.843", "to": 23, "width": 0.8431313633918762}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.850", "to": 25, "width": 0.8503299951553345}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.846", "to": 41, "width": 0.8458964824676514}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.871", "to": 42, "width": 0.8710296154022217}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.875", "to": 43, "width": 0.8746435642242432}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.852", "to": 47, "width": 0.8523178100585938}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.863", "to": 50, "width": 0.8629999160766602}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.871", "to": 53, "width": 0.8712524771690369}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.879", "to": 55, "width": 0.87870192527771}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.768", "to": 11, "width": 0.7681224942207336}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.770", "to": 21, "width": 0.770399272441864}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.764", "to": 28, "width": 0.7635861039161682}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.797", "to": 32, "width": 0.7969117760658264}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.813", "to": 52, "width": 0.812583327293396}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.797", "to": 54, "width": 0.7973691821098328}, {"color": "rgb(0,255,120)", "from": 5, "title": "sim=0.861", "to": 17, "width": 0.8610182404518127}, {"color": "rgb(0,255,120)", "from": 5, "title": "sim=0.766", "to": 18, "width": 0.7658933997154236}, {"color": "rgb(0,255,120)", "from": 5, "title": "sim=0.761", "to": 21, "width": 0.7611669301986694}, {"color": "rgb(0,255,120)", "from": 5, "title": "sim=0.754", "to": 24, "width": 0.7538726925849915}, {"color": "rgb(0,255,120)", "from": 5, "title": "sim=0.782", "to": 32, "width": 0.7824955582618713}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.752", "to": 7, "width": 0.7519727349281311}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.756", "to": 13, "width": 0.7563194632530212}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.787", "to": 15, "width": 0.7869091033935547}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.782", "to": 16, "width": 0.7815914750099182}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.776", "to": 17, "width": 0.775569498538971}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.769", "to": 18, "width": 0.7689465284347534}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.808", "to": 27, "width": 0.8077657222747803}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.751", "to": 33, "width": 0.7512932419776917}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.796", "to": 34, "width": 0.7957619428634644}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.756", "to": 35, "width": 0.7562713027000427}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.780", "to": 36, "width": 0.7804702520370483}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.772", "to": 37, "width": 0.7717123031616211}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.785", "to": 39, "width": 0.7850953340530396}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.754", "to": 41, "width": 0.753611147403717}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.754", "to": 48, "width": 0.753548800945282}, {"color": "rgb(0,255,120)", "from": 6, "title": "sim=0.796", "to": 51, "width": 0.7959479093551636}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.759", "to": 13, "width": 0.7590512037277222}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.755", "to": 15, "width": 0.7545934915542603}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.787", "to": 18, "width": 0.7869964838027954}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.783", "to": 36, "width": 0.783345639705658}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.755", "to": 37, "width": 0.754934549331665}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.796", "to": 51, "width": 0.796342134475708}, {"color": "rgb(0,255,120)", "from": 8, "title": "sim=0.751", "to": 11, "width": 0.7512327432632446}, {"color": "rgb(0,255,120)", "from": 10, "title": "sim=0.796", "to": 52, "width": 0.7956767082214355}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.778", "to": 22, "width": 0.7777291536331177}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.766", "to": 15, "width": 0.7658548951148987}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.768", "to": 17, "width": 0.7680487632751465}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.783", "to": 18, "width": 0.7830626964569092}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.832", "to": 19, "width": 0.831590473651886}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.764", "to": 27, "width": 0.7638982534408569}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.767", "to": 33, "width": 0.7672767639160156}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.776", "to": 34, "width": 0.7759832739830017}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.798", "to": 36, "width": 0.7981005907058716}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.859", "to": 37, "width": 0.8594222068786621}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.770", "to": 39, "width": 0.7704132795333862}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.822", "to": 40, "width": 0.8219517469406128}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.818", "to": 51, "width": 0.817543625831604}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.779", "to": 56, "width": 0.7785602807998657}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.874", "to": 58, "width": 0.8742226958274841}, {"color": "rgb(0,255,120)", "from": 14, "title": "sim=0.918", "to": 22, "width": 0.9176127910614014}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.756", "to": 17, "width": 0.7558221220970154}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.795", "to": 19, "width": 0.7952690124511719}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.792", "to": 27, "width": 0.7916347980499268}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.773", "to": 30, "width": 0.7729006409645081}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.798", "to": 33, "width": 0.7980484962463379}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.793", "to": 34, "width": 0.7930605411529541}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.777", "to": 36, "width": 0.7771393656730652}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.829", "to": 37, "width": 0.8289421796798706}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.847", "to": 39, "width": 0.8468335866928101}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.751", "to": 40, "width": 0.7514328956604004}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.776", "to": 48, "width": 0.7755078077316284}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.827", "to": 56, "width": 0.826723575592041}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.758", "to": 57, "width": 0.7578446269035339}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.761", "to": 58, "width": 0.7614157199859619}, {"color": "rgb(0,255,120)", "from": 16, "title": "sim=0.762", "to": 18, "width": 0.7624249458312988}, {"color": "rgb(0,255,120)", "from": 16, "title": "sim=0.775", "to": 51, "width": 0.7751134634017944}, {"color": "rgb(0,255,120)", "from": 17, "title": "sim=0.836", "to": 18, "width": 0.8362464308738708}, {"color": "rgb(0,255,120)", "from": 17, "title": "sim=0.787", "to": 24, "width": 0.7874820828437805}, {"color": "rgb(0,255,120)", "from": 17, "title": "sim=0.804", "to": 32, "width": 0.8044071197509766}, {"color": "rgb(0,255,120)", "from": 17, "title": "sim=0.775", "to": 36, "width": 0.7746764421463013}, {"color": "rgb(0,255,120)", "from": 17, "title": "sim=0.758", "to": 37, "width": 0.7576839923858643}, {"color": "rgb(0,255,120)", "from": 17, "title": "sim=0.798", "to": 49, "width": 0.7975053787231445}, {"color": "rgb(0,255,120)", "from": 17, "title": "sim=0.793", "to": 51, "width": 0.7927019000053406}, {"color": "rgb(0,255,120)", "from": 18, "title": "sim=0.797", "to": 32, "width": 0.7966537475585938}, {"color": "rgb(0,255,120)", "from": 18, "title": "sim=0.752", "to": 36, "width": 0.7516801953315735}, {"color": "rgb(0,255,120)", "from": 18, "title": "sim=0.776", "to": 40, "width": 0.7757218480110168}, {"color": "rgb(0,255,120)", "from": 18, "title": "sim=0.767", "to": 49, "width": 0.7669702172279358}, {"color": "rgb(0,255,120)", "from": 18, "title": "sim=0.782", "to": 51, "width": 0.7818987965583801}, {"color": "rgb(0,255,120)", "from": 18, "title": "sim=0.765", "to": 58, "width": 0.7648020386695862}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.778", "to": 27, "width": 0.7778368592262268}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.839", "to": 33, "width": 0.8392581343650818}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.789", "to": 36, "width": 0.7892762422561646}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.815", "to": 37, "width": 0.8152867555618286}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.752", "to": 39, "width": 0.7518693208694458}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.842", "to": 40, "width": 0.8421308398246765}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.750", "to": 45, "width": 0.7503849864006042}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.765", "to": 48, "width": 0.7650133371353149}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.755", "to": 51, "width": 0.7549450397491455}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.828", "to": 56, "width": 0.8280474543571472}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.795", "to": 58, "width": 0.7948761582374573}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.930", "to": 23, "width": 0.9301374554634094}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.938", "to": 25, "width": 0.9379033446311951}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.927", "to": 41, "width": 0.9270667433738708}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.926", "to": 42, "width": 0.926120936870575}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.937", "to": 43, "width": 0.9366916418075562}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.897", "to": 47, "width": 0.8967908024787903}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.936", "to": 50, "width": 0.9361506104469299}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.794", "to": 51, "width": 0.7939423322677612}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.921", "to": 53, "width": 0.9206635355949402}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.959", "to": 55, "width": 0.9593960046768188}, {"color": "rgb(0,255,120)", "from": 21, "title": "sim=0.750", "to": 46, "width": 0.7502384185791016}, {"color": "rgb(0,255,120)", "from": 23, "title": "sim=0.906", "to": 25, "width": 0.9060958027839661}, {"color": "rgb(0,255,120)", "from": 23, "title": "sim=0.916", "to": 41, "width": 0.9157769680023193}, {"color": "rgb(0,255,120)", "from": 23, "title": "sim=0.882", "to": 42, "width": 0.881504476070404}, {"color": "rgb(0,255,120)", "from": 23, "title": "sim=0.919", "to": 43, "width": 0.9185958504676819}, {"color": "rgb(0,255,120)", "from": 23, "title": "sim=0.899", "to": 47, "width": 0.8993850350379944}, {"color": "rgb(0,255,120)", "from": 23, "title": "sim=0.911", "to": 50, "width": 0.9109863638877869}, {"color": "rgb(0,255,120)", "from": 23, "title": "sim=0.797", "to": 51, "width": 0.7970091104507446}, {"color": "rgb(0,255,120)", "from": 23, "title": "sim=0.907", "to": 53, "width": 0.9070805311203003}, {"color": "rgb(0,255,120)", "from": 23, "title": "sim=0.935", "to": 55, "width": 0.934865415096283}, {"color": "rgb(0,255,120)", "from": 24, "title": "sim=0.756", "to": 39, "width": 0.7557128667831421}, {"color": "rgb(0,255,120)", "from": 24, "title": "sim=0.769", "to": 54, "width": 0.7686201333999634}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.962", "to": 41, "width": 0.9619179368019104}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.934", "to": 42, "width": 0.9342131614685059}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.946", "to": 43, "width": 0.9455652236938477}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.891", "to": 47, "width": 0.8909949660301208}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.977", "to": 50, "width": 0.977009117603302}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.859", "to": 51, "width": 0.8588730692863464}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.926", "to": 53, "width": 0.9264684319496155}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.967", "to": 55, "width": 0.9668005108833313}, {"color": "rgb(0,255,120)", "from": 26, "title": "sim=0.835", "to": 29, "width": 0.8352102637290955}, {"color": "rgb(0,255,120)", "from": 26, "title": "sim=0.765", "to": 30, "width": 0.7648167014122009}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.834", "to": 33, "width": 0.8343732953071594}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.784", "to": 34, "width": 0.7844554781913757}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.758", "to": 35, "width": 0.7583020925521851}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.785", "to": 36, "width": 0.7849947214126587}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.790", "to": 37, "width": 0.7897302508354187}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.811", "to": 39, "width": 0.8109369277954102}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.814", "to": 45, "width": 0.8138301372528076}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.843", "to": 48, "width": 0.8427742719650269}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.823", "to": 56, "width": 0.8230020999908447}, {"color": "rgb(0,255,120)", "from": 28, "title": "sim=0.848", "to": 32, "width": 0.8475832343101501}, {"color": "rgb(0,255,120)", "from": 28, "title": "sim=0.802", "to": 49, "width": 0.802374541759491}, {"color": "rgb(0,255,120)", "from": 28, "title": "sim=0.775", "to": 52, "width": 0.775342583656311}, {"color": "rgb(0,255,120)", "from": 28, "title": "sim=0.838", "to": 54, "width": 0.8380496501922607}, {"color": "rgb(0,255,120)", "from": 29, "title": "sim=0.753", "to": 30, "width": 0.7534079551696777}, {"color": "rgb(0,255,120)", "from": 30, "title": "sim=0.798", "to": 34, "width": 0.7975936532020569}, {"color": "rgb(0,255,120)", "from": 30, "title": "sim=0.830", "to": 44, "width": 0.8296599388122559}, {"color": "rgb(0,255,120)", "from": 30, "title": "sim=0.803", "to": 56, "width": 0.8025727868080139}, {"color": "rgb(0,255,120)", "from": 30, "title": "sim=0.872", "to": 57, "width": 0.8724285960197449}, {"color": "rgb(0,255,120)", "from": 32, "title": "sim=0.851", "to": 49, "width": 0.851016640663147}, {"color": "rgb(0,255,120)", "from": 32, "title": "sim=0.789", "to": 52, "width": 0.7889870405197144}, {"color": "rgb(0,255,120)", "from": 32, "title": "sim=0.833", "to": 54, "width": 0.833071231842041}, {"color": "rgb(0,255,120)", "from": 33, "title": "sim=0.773", "to": 36, "width": 0.7732200026512146}, {"color": "rgb(0,255,120)", "from": 33, "title": "sim=0.811", "to": 37, "width": 0.8106886148452759}, {"color": "rgb(0,255,120)", "from": 33, "title": "sim=0.782", "to": 39, "width": 0.7824140191078186}, {"color": "rgb(0,255,120)", "from": 33, "title": "sim=0.762", "to": 45, "width": 0.7615361213684082}, {"color": "rgb(0,255,120)", "from": 33, "title": "sim=0.903", "to": 48, "width": 0.9027693867683411}, {"color": "rgb(0,255,120)", "from": 33, "title": "sim=0.867", "to": 56, "width": 0.867241382598877}, {"color": "rgb(0,255,120)", "from": 33, "title": "sim=0.768", "to": 58, "width": 0.7681595683097839}, {"color": "rgb(0,255,120)", "from": 34, "title": "sim=0.799", "to": 37, "width": 0.7991887331008911}, {"color": "rgb(0,255,120)", "from": 34, "title": "sim=0.775", "to": 39, "width": 0.774932324886322}, {"color": "rgb(0,255,120)", "from": 34, "title": "sim=0.828", "to": 44, "width": 0.8280310034751892}, {"color": "rgb(0,255,120)", "from": 34, "title": "sim=0.845", "to": 56, "width": 0.8451793193817139}, {"color": "rgb(0,255,120)", "from": 34, "title": "sim=0.790", "to": 57, "width": 0.7899478077888489}, {"color": "rgb(0,255,120)", "from": 34, "title": "sim=0.758", "to": 58, "width": 0.7575535178184509}, {"color": "rgb(0,255,120)", "from": 35, "title": "sim=0.844", "to": 38, "width": 0.8437491059303284}, {"color": "rgb(0,255,120)", "from": 35, "title": "sim=0.832", "to": 39, "width": 0.8317752480506897}, {"color": "rgb(0,255,120)", "from": 35, "title": "sim=0.828", "to": 45, "width": 0.8281955122947693}, {"color": "rgb(0,255,120)", "from": 36, "title": "sim=0.800", "to": 37, "width": 0.8003026843070984}, {"color": "rgb(0,255,120)", "from": 36, "title": "sim=0.752", "to": 39, "width": 0.752246618270874}, {"color": "rgb(0,255,120)", "from": 36, "title": "sim=0.784", "to": 40, "width": 0.783677339553833}, {"color": "rgb(0,255,120)", "from": 36, "title": "sim=0.762", "to": 48, "width": 0.7621578574180603}, {"color": "rgb(0,255,120)", "from": 36, "title": "sim=0.805", "to": 51, "width": 0.8045116066932678}, {"color": "rgb(0,255,120)", "from": 36, "title": "sim=0.801", "to": 58, "width": 0.8006643652915955}, {"color": "rgb(0,255,120)", "from": 37, "title": "sim=0.809", "to": 39, "width": 0.80882328748703}, {"color": "rgb(0,255,120)", "from": 37, "title": "sim=0.784", "to": 40, "width": 0.784370481967926}, {"color": "rgb(0,255,120)", "from": 37, "title": "sim=0.764", "to": 41, "width": 0.7644350528717041}, {"color": "rgb(0,255,120)", "from": 37, "title": "sim=0.767", "to": 48, "width": 0.767264187335968}, {"color": "rgb(0,255,120)", "from": 37, "title": "sim=0.774", "to": 51, "width": 0.773953378200531}, {"color": "rgb(0,255,120)", "from": 37, "title": "sim=0.807", "to": 56, "width": 0.8068953156471252}, {"color": "rgb(0,255,120)", "from": 37, "title": "sim=0.819", "to": 58, "width": 0.8186562657356262}, {"color": "rgb(0,255,120)", "from": 38, "title": "sim=0.819", "to": 45, "width": 0.818902313709259}, {"color": "rgb(0,255,120)", "from": 39, "title": "sim=0.771", "to": 56, "width": 0.7713736891746521}, {"color": "rgb(0,255,120)", "from": 39, "title": "sim=0.752", "to": 58, "width": 0.7524465918540955}, {"color": "rgb(0,255,120)", "from": 40, "title": "sim=0.764", "to": 51, "width": 0.7637806534767151}, {"color": "rgb(0,255,120)", "from": 40, "title": "sim=0.881", "to": 58, "width": 0.8805106282234192}, {"color": "rgb(0,255,120)", "from": 41, "title": "sim=0.940", "to": 42, "width": 0.9395402669906616}, {"color": "rgb(0,255,120)", "from": 41, "title": "sim=0.956", "to": 43, "width": 0.9562699794769287}, {"color": "rgb(0,255,120)", "from": 41, "title": "sim=0.910", "to": 47, "width": 0.910077691078186}, {"color": "rgb(0,255,120)", "from": 41, "title": "sim=0.968", "to": 50, "width": 0.9682319760322571}, {"color": "rgb(0,255,120)", "from": 41, "title": "sim=0.827", "to": 51, "width": 0.827268123626709}, {"color": "rgb(0,255,120)", "from": 41, "title": "sim=0.943", "to": 53, "width": 0.9432861804962158}, {"color": "rgb(0,255,120)", "from": 41, "title": "sim=0.962", "to": 55, "width": 0.9621647000312805}, {"color": "rgb(0,255,120)", "from": 42, "title": "sim=0.958", "to": 43, "width": 0.9579290151596069}, {"color": "rgb(0,255,120)", "from": 42, "title": "sim=0.897", "to": 47, "width": 0.8974902629852295}, {"color": "rgb(0,255,120)", "from": 42, "title": "sim=0.948", "to": 50, "width": 0.9484976530075073}, {"color": "rgb(0,255,120)", "from": 42, "title": "sim=0.789", "to": 51, "width": 0.7894380688667297}, {"color": "rgb(0,255,120)", "from": 42, "title": "sim=0.945", "to": 53, "width": 0.9447564482688904}, {"color": "rgb(0,255,120)", "from": 42, "title": "sim=0.951", "to": 55, "width": 0.9506354331970215}, {"color": "rgb(0,255,120)", "from": 43, "title": "sim=0.929", "to": 47, "width": 0.9285951852798462}, {"color": "rgb(0,255,120)", "from": 43, "title": "sim=0.956", "to": 50, "width": 0.9555526375770569}, {"color": "rgb(0,255,120)", "from": 43, "title": "sim=0.777", "to": 51, "width": 0.7774405479431152}, {"color": "rgb(0,255,120)", "from": 43, "title": "sim=0.991", "to": 53, "width": 0.990801990032196}, {"color": "rgb(0,255,120)", "from": 43, "title": "sim=0.971", "to": 55, "width": 0.9710848331451416}, {"color": "rgb(0,255,120)", "from": 44, "title": "sim=0.764", "to": 45, "width": 0.7643387913703918}, {"color": "rgb(0,255,120)", "from": 44, "title": "sim=0.805", "to": 56, "width": 0.8054689764976501}, {"color": "rgb(0,255,120)", "from": 45, "title": "sim=0.762", "to": 56, "width": 0.7618969678878784}, {"color": "rgb(0,255,120)", "from": 47, "title": "sim=0.911", "to": 50, "width": 0.9113771915435791}, {"color": "rgb(0,255,120)", "from": 47, "title": "sim=0.756", "to": 51, "width": 0.7556511759757996}, {"color": "rgb(0,255,120)", "from": 47, "title": "sim=0.916", "to": 53, "width": 0.9162946939468384}, {"color": "rgb(0,255,120)", "from": 47, "title": "sim=0.920", "to": 55, "width": 0.9204612970352173}, {"color": "rgb(0,255,120)", "from": 48, "title": "sim=0.785", "to": 56, "width": 0.7846769690513611}, {"color": "rgb(0,255,120)", "from": 49, "title": "sim=0.753", "to": 52, "width": 0.7526358962059021}, {"color": "rgb(0,255,120)", "from": 49, "title": "sim=0.783", "to": 54, "width": 0.7832608819007874}, {"color": "rgb(0,255,120)", "from": 50, "title": "sim=0.863", "to": 51, "width": 0.8633450865745544}, {"color": "rgb(0,255,120)", "from": 50, "title": "sim=0.932", "to": 53, "width": 0.9316107034683228}, {"color": "rgb(0,255,120)", "from": 50, "title": "sim=0.966", "to": 55, "width": 0.9663044810295105}, {"color": "rgb(0,255,120)", "from": 51, "title": "sim=0.773", "to": 53, "width": 0.7727070450782776}, {"color": "rgb(0,255,120)", "from": 51, "title": "sim=0.830", "to": 55, "width": 0.8300269246101379}, {"color": "rgb(0,255,120)", "from": 51, "title": "sim=0.802", "to": 58, "width": 0.8016748428344727}, {"color": "rgb(0,255,120)", "from": 52, "title": "sim=0.853", "to": 54, "width": 0.8531975150108337}, {"color": "rgb(0,255,120)", "from": 53, "title": "sim=0.960", "to": 55, "width": 0.9599027037620544}, {"color": "rgb(0,255,120)", "from": 56, "title": "sim=0.764", "to": 57, "width": 0.7637540102005005}, {"color": "rgb(0,255,120)", "from": 56, "title": "sim=0.785", "to": 58, "width": 0.7854271531105042}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+    <script type="text/javascript">
+    function enhanceNetwork(network, nodes, edges) {
+        // controls panel
+        const panel = document.createElement('div');
+        panel.style.position = 'fixed';
+        panel.style.top = '10px';
+        panel.style.left = '10px';
+        panel.style.zIndex = 9999;
+        panel.style.background = 'rgba(255,255,255,0.96)';
+        panel.style.border = '1px solid #ddd';
+        panel.style.padding = '10px';
+        panel.style.borderRadius = '8px';
+        panel.style.fontFamily = 'sans-serif';
+        panel.innerHTML = `
+            <b>Тема: успех</b><br>
+            <small>Узлов: 59, Рёбер: 232</small><br>
+            <small>Плотность: 0.136, Кластеризация: 0.565</small><br>
+            <small>Энтропия: 5.502 (норм.: 0.935)</small><br>
+            <hr style="margin:6px 0;">
+            <input type="text" id="patternSearch" placeholder="Поиск паттерна..." style="width:200px;">
+            <button id="searchBtn">Найти</button>
+            <button id="resetBtn">Сброс</button>
+            <hr style="margin:6px 0;">
+            Мин. похожесть: <input type="range" id="weightSlider" min="0" max="1" step="0.01" value="0.75">
+            <span id="weightVal">0.75</span>
+        `;
+        document.body.appendChild(panel);
+
+        const infoBox = document.createElement('div');
+        infoBox.style.position = 'fixed';
+        infoBox.style.bottom = '14px';
+        infoBox.style.right = '14px';
+        infoBox.style.zIndex = 9999;
+        infoBox.style.background = 'rgba(255,255,255,0.95)';
+        infoBox.style.border = '1px solid #ddd';
+        infoBox.style.padding = '10px';
+        infoBox.style.maxWidth = '420px';
+        infoBox.style.maxHeight = '320px';
+        infoBox.style.overflow = 'auto';
+        infoBox.style.borderRadius = '8px';
+        infoBox.style.display = 'none';
+        document.body.appendChild(infoBox);
+
+        // поиск
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const q = document.getElementById('patternSearch').value.trim().toLowerCase();
+            if (!q) return;
+            const found = nodes.get({filter: n => n.label.toLowerCase().includes(q) });
+            if (found.length === 0) {
+                alert('Не найдено');
+                return;
+            }
+            const ids = found.map(x => x.id);
+            network.selectNodes(ids);
+            network.fit({nodes: ids, animation: true});
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            document.getElementById('patternSearch').value = '';
+            // restore nodes
+            const allNodes = nodes.get();
+            for (let n of allNodes) {
+                n.color = undefined;
+            }
+            nodes.update(allNodes);
+            // restore edges
+            const allEdges = edges.get();
+            for (let e of allEdges) {
+                e.hidden = false;
+                e.color = undefined;
+            }
+            edges.update(allEdges);
+            infoBox.style.display = 'none';
+            network.fit();
+        });
+
+        // weight filter
+        const slider = document.getElementById('weightSlider');
+        const weightVal = document.getElementById('weightVal');
+        slider.addEventListener('input', function() {
+            const minW = parseFloat(slider.value);
+            weightVal.textContent = minW.toFixed(2);
+            const allEdges = edges.get();
+            for (let e of allEdges) {
+                e.hidden = e.weight < minW;
+            }
+            edges.update(allEdges);
+        });
+
+        // click: highlight neighbors and edges
+        network.on('click', function(params) {
+            if (params.nodes.length > 0) {
+                const id = params.nodes[0];
+                const connected = network.getConnectedNodes(id);
+                const allNodes = nodes.get();
+                for (let n of allNodes) {
+                    n.color = (n.id === id || connected.includes(n.id)) ? '#ff9800' : '#d3d3d3';
+                }
+                nodes.update(allNodes);
+                // color edges: highlight edges adjacent to id
+                const allEdges = edges.get();
+                for (let e of allEdges) {
+                    if (e.from === id || e.to === id) {
+                        e.color = '#ff9800';
+                        e.width = Math.max(1.5, e.weight*5);
+                        e.hidden = false;
+                    } else {
+                        e.color = '#cccccc';
+                    }
+                }
+                edges.update(allEdges);
+            } else {
+                // background click: reset colors
+                const allNodes = nodes.get();
+                for (let n of allNodes) n.color = undefined;
+                nodes.update(allNodes);
+                const allEdges = edges.get();
+                for (let e of allEdges) e.color = undefined;
+                edges.update(allEdges);
+            }
+        });
+
+        // doubleClick: show constituents (words, count, doc_freq, pmi)
+        network.on('doubleClick', function(params) {
+            if (params.nodes.length > 0) {
+                const id = params.nodes[0];
+                const node = nodes.get(id);
+                if (!node) return;
+                // assemble metadata string
+                let meta = `<b>Паттерн:</b> ${node.label}<br>`;
+                if (node.words) meta += `<b>Слова:</b> ${node.words.join(', ')}<br>`;
+                if (node.count!==undefined) meta += `<b>count:</b> ${node.count} `;
+                if (node.doc_freq!==undefined) meta += `<b>doc_freq:</b> ${node.doc_freq} `;
+                if (node.pmi!==undefined) meta += `<b>pmi:</b> ${parseFloat(node.pmi).toFixed(2)} `;
+                if (node.length!==undefined) meta += `<b>length:</b> ${node.length} `;
+                infoBox.innerHTML = meta;
+                infoBox.style.display = 'block';
+            }
+        });
+
+        // ensure edges are visible initially
+        const allEdgesInit = edges.get();
+        for (let e of allEdgesInit) e.hidden = false;
+        edges.update(allEdgesInit);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        enhanceNetwork(network, nodes, edges);
+    });
+    </script>
+    
+</body>
+</html>

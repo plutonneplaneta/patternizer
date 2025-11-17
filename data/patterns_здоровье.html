@@ -1,0 +1,307 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "count": 16, "doc_freq": 16, "id": 2, "label": "\u043e\u0431\u0440\u0430\u0442\u0438\u0442\u044c \u0432\u043d\u0438\u043c\u0430\u043d\u0438\u0435", "length": 2, "pmi": 9.386381406214431, "shape": "dot", "size": 36, "title": "\u043e\u0431\u0440\u0430\u0442\u0438\u0442\u044c \u0432\u043d\u0438\u043c\u0430\u043d\u0438\u0435 (pmi=9.39, doc_freq=16, length=2)", "words": ["\u043e\u0431\u0440\u0430\u0442\u0438\u0442\u044c", "\u0432\u043d\u0438\u043c\u0430\u043d\u0438\u0435"]}, {"color": "#97c2fc", "count": 13, "doc_freq": 12, "id": 3, "label": "\u043e\u0431\u0440\u0430\u0449\u0430\u0442\u044c \u0432\u043d\u0438\u043c\u0430\u043d\u0438\u0435", "length": 2, "pmi": 9.334748637799107, "shape": "dot", "size": 34, "title": "\u043e\u0431\u0440\u0430\u0449\u0430\u0442\u044c \u0432\u043d\u0438\u043c\u0430\u043d\u0438\u0435 (pmi=9.33, doc_freq=12, length=2)", "words": ["\u043e\u0431\u0440\u0430\u0449\u0430\u0442\u044c", "\u0432\u043d\u0438\u043c\u0430\u043d\u0438\u0435"]}, {"color": "#97c2fc", "count": 50, "doc_freq": 44, "id": 5, "label": "\u043e\u0440\u0438\u0433\u0438\u043d\u0430\u043b \u0432\u0437\u044f\u0442\u044c", "length": 2, "pmi": 8.301254586790273, "shape": "dot", "size": 40, "title": "\u043e\u0440\u0438\u0433\u0438\u043d\u0430\u043b \u0432\u0437\u044f\u0442\u044c (pmi=8.30, doc_freq=44, length=2)", "words": ["\u043e\u0440\u0438\u0433\u0438\u043d\u0430\u043b", "\u0432\u0437\u044f\u0442\u044c"]}, {"color": "#97c2fc", "count": 28, "doc_freq": 17, "id": 12, "label": "\u043f\u0435\u0440\u0432\u044b\u0439 \u043e\u0447\u0435\u0440\u0435\u0434\u044c", "length": 2, "pmi": 6.1556650981225705, "shape": "dot", "size": 30, "title": "\u043f\u0435\u0440\u0432\u044b\u0439 \u043e\u0447\u0435\u0440\u0435\u0434\u044c (pmi=6.16, doc_freq=17, length=2)", "words": ["\u043f\u0435\u0440\u0432\u044b\u0439", "\u043e\u0447\u0435\u0440\u0435\u0434\u044c"]}, {"color": "#97c2fc", "count": 18, "doc_freq": 17, "id": 13, "label": "\u0431\u043e\u043b\u044c\u0448\u0438\u0439 \u0447\u0430\u0441\u0442\u044c", "length": 2, "pmi": 6.005735989662802, "shape": "dot", "size": 30, "title": "\u0431\u043e\u043b\u044c\u0448\u0438\u0439 \u0447\u0430\u0441\u0442\u044c (pmi=6.01, doc_freq=17, length=2)", "words": ["\u0431\u043e\u043b\u044c\u0448\u0438\u0439", "\u0447\u0430\u0441\u0442\u044c"]}, {"color": "#97c2fc", "count": 59, "doc_freq": 39, "id": 26, "label": "\u0441\u0430\u043c \u0434\u0435\u043b\u043e", "length": 2, "pmi": 4.565232489685208, "shape": "dot", "size": 38, "title": "\u0441\u0430\u043c \u0434\u0435\u043b\u043e (pmi=4.57, doc_freq=39, length=2)", "words": ["\u0441\u0430\u043c", "\u0434\u0435\u043b\u043e"]}, {"color": "#97c2fc", "count": 14, "doc_freq": 13, "id": 32, "label": "\u043c\u043e\u0447\u044c \u043f\u043e\u0437\u0432\u043e\u043b\u0438\u0442\u044c", "length": 2, "pmi": 4.220622501811459, "shape": "dot", "size": 24, "title": "\u043c\u043e\u0447\u044c \u043f\u043e\u0437\u0432\u043e\u043b\u0438\u0442\u044c (pmi=4.22, doc_freq=13, length=2)", "words": ["\u043c\u043e\u0447\u044c", "\u043f\u043e\u0437\u0432\u043e\u043b\u0438\u0442\u044c"]}, {"color": "#97c2fc", "count": 20, "doc_freq": 19, "id": 38, "label": "\u0442\u0430\u043a \u043d\u0430\u0437\u044b\u0432\u0430\u0442\u044c", "length": 2, "pmi": 3.6212789712088975, "shape": "dot", "size": 26, "title": "\u0442\u0430\u043a \u043d\u0430\u0437\u044b\u0432\u0430\u0442\u044c (pmi=3.62, doc_freq=19, length=2)", "words": ["\u0442\u0430\u043a", "\u043d\u0430\u0437\u044b\u0432\u0430\u0442\u044c"]}, {"color": "#97c2fc", "count": 10, "doc_freq": 10, "id": 4, "label": "\u043f\u043e\u0434\u0430\u0432\u043b\u044f\u0442\u044c \u0431\u043e\u043b\u044c\u0448\u0438\u043d\u0441\u0442\u0432\u043e", "length": 2, "pmi": 8.492580810046356, "shape": "dot", "size": 31, "title": "\u043f\u043e\u0434\u0430\u0432\u043b\u044f\u0442\u044c \u0431\u043e\u043b\u044c\u0448\u0438\u043d\u0441\u0442\u0432\u043e (pmi=8.49, doc_freq=10, length=2)", "words": ["\u043f\u043e\u0434\u0430\u0432\u043b\u044f\u0442\u044c", "\u0431\u043e\u043b\u044c\u0448\u0438\u043d\u0441\u0442\u0432\u043e"]}, {"color": "#97c2fc", "count": 11, "doc_freq": 10, "id": 25, "label": "\u0431\u043e\u043b\u044c\u0448\u0438\u043d\u0441\u0442\u0432\u043e \u0441\u043b\u0443\u0447\u0430\u0439", "length": 2, "pmi": 4.63008433379629, "shape": "dot", "size": 24, "title": "\u0431\u043e\u043b\u044c\u0448\u0438\u043d\u0441\u0442\u0432\u043e \u0441\u043b\u0443\u0447\u0430\u0439 (pmi=4.63, doc_freq=10, length=2)", "words": ["\u0431\u043e\u043b\u044c\u0448\u0438\u043d\u0441\u0442\u0432\u043e", "\u0441\u043b\u0443\u0447\u0430\u0439"]}, {"color": "#97c2fc", "count": 20, "doc_freq": 18, "id": 30, "label": "\u043e\u0447\u0435\u043d\u044c \u043c\u043d\u043e\u0433\u043e", "length": 2, "pmi": 4.325823087682726, "shape": "dot", "size": 27, "title": "\u043e\u0447\u0435\u043d\u044c \u043c\u043d\u043e\u0433\u043e (pmi=4.33, doc_freq=18, length=2)", "words": ["\u043e\u0447\u0435\u043d\u044c", "\u043c\u043d\u043e\u0433\u043e"]}, {"color": "#97c2fc", "count": 13, "doc_freq": 13, "id": 35, "label": "\u0441\u0430\u043c\u044b\u0439 \u0433\u043b\u0430\u0432\u043d\u044b\u0439", "length": 2, "pmi": 3.6746952204965817, "shape": "dot", "size": 23, "title": "\u0441\u0430\u043c\u044b\u0439 \u0433\u043b\u0430\u0432\u043d\u044b\u0439 (pmi=3.67, doc_freq=13, length=2)", "words": ["\u0441\u0430\u043c\u044b\u0439", "\u0433\u043b\u0430\u0432\u043d\u044b\u0439"]}, {"color": "#97c2fc", "count": 22, "doc_freq": 17, "id": 15, "label": "\u0438\u043c\u0435\u0442\u044c \u043f\u0440\u0430\u0432\u043e", "length": 2, "pmi": 5.82401056812633, "shape": "dot", "size": 30, "title": "\u0438\u043c\u0435\u0442\u044c \u043f\u0440\u0430\u0432\u043e (pmi=5.82, doc_freq=17, length=2)", "words": ["\u0438\u043c\u0435\u0442\u044c", "\u043f\u0440\u0430\u0432\u043e"]}, {"color": "#97c2fc", "count": 13, "doc_freq": 12, "id": 7, "label": "\u0434\u0430\u043d\u043d\u044b\u0439 \u043c\u043e\u043c\u0435\u043d\u0442", "length": 2, "pmi": 7.30203632348829, "shape": "dot", "size": 30, "title": "\u0434\u0430\u043d\u043d\u044b\u0439 \u043c\u043e\u043c\u0435\u043d\u0442 (pmi=7.30, doc_freq=12, length=2)", "words": ["\u0434\u0430\u043d\u043d\u044b\u0439", "\u043c\u043e\u043c\u0435\u043d\u0442"]}, {"color": "#97c2fc", "count": 61, "doc_freq": 42, "id": 16, "label": "\u0442\u0430\u043a \u0434\u0430\u043b\u0435\u0435", "length": 2, "pmi": 5.380330849465034, "shape": "dot", "size": 40, "title": "\u0442\u0430\u043a \u0434\u0430\u043b\u0435\u0435 (pmi=5.38, doc_freq=42, length=2)", "words": ["\u0442\u0430\u043a", "\u0434\u0430\u043b\u0435\u0435"]}, {"color": "#97c2fc", "count": 13, "doc_freq": 13, "id": 39, "label": "\u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0439 \u0432\u0440\u0435\u043c\u044f", "length": 2, "pmi": 3.3458807400239796, "shape": "dot", "size": 23, "title": "\u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0439 \u0432\u0440\u0435\u043c\u044f (pmi=3.35, doc_freq=13, length=2)", "words": ["\u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0439", "\u0432\u0440\u0435\u043c\u044f"]}, {"color": "#97c2fc", "count": 19, "doc_freq": 16, "id": 42, "label": "\u043f\u0435\u0440\u0432\u044b\u0439 \u0440\u0430\u0437", "length": 2, "pmi": 3.2357067553974415, "shape": "dot", "size": 24, "title": "\u043f\u0435\u0440\u0432\u044b\u0439 \u0440\u0430\u0437 (pmi=3.24, doc_freq=16, length=2)", "words": ["\u043f\u0435\u0440\u0432\u044b\u0439", "\u0440\u0430\u0437"]}, {"color": "#97c2fc", "count": 12, "doc_freq": 10, "id": 8, "label": "\u0441\u043e\u0446\u0438\u0430\u043b\u044c\u043d\u044b\u0439 \u0441\u0435\u0442\u044c", "length": 2, "pmi": 7.206241471930054, "shape": "dot", "size": 29, "title": "\u0441\u043e\u0446\u0438\u0430\u043b\u044c\u043d\u044b\u0439 \u0441\u0435\u0442\u044c (pmi=7.21, doc_freq=10, length=2)", "words": ["\u0441\u043e\u0446\u0438\u0430\u043b\u044c\u043d\u044b\u0439", "\u0441\u0435\u0442\u044c"]}, {"color": "#97c2fc", "count": 12, "doc_freq": 12, "id": 31, "label": "\u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435 \u043d\u0430\u0446\u0438\u044f", "length": 2, "pmi": 4.221363535492526, "shape": "dot", "size": 24, "title": "\u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435 \u043d\u0430\u0446\u0438\u044f (pmi=4.22, doc_freq=12, length=2)", "words": ["\u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435", "\u043d\u0430\u0446\u0438\u044f"]}, {"color": "#97c2fc", "count": 13, "doc_freq": 10, "id": 9, "label": "\u043f\u0440\u0438\u043d\u044f\u0442\u044c \u0440\u0435\u0448\u0435\u043d\u0438\u0435", "length": 2, "pmi": 6.48299959638305, "shape": "dot", "size": 27, "title": "\u043f\u0440\u0438\u043d\u044f\u0442\u044c \u0440\u0435\u0448\u0435\u043d\u0438\u0435 (pmi=6.48, doc_freq=10, length=2)", "words": ["\u043f\u0440\u0438\u043d\u044f\u0442\u044c", "\u0440\u0435\u0448\u0435\u043d\u0438\u0435"]}, {"color": "#97c2fc", "count": 11, "doc_freq": 10, "id": 28, "label": "\u0440\u0435\u0448\u0438\u0442\u044c \u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0430", "length": 2, "pmi": 4.464912862324613, "shape": "dot", "size": 23, "title": "\u0440\u0435\u0448\u0438\u0442\u044c \u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0430 (pmi=4.46, doc_freq=10, length=2)", "words": ["\u0440\u0435\u0448\u0438\u0442\u044c", "\u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0430"]}, {"color": "#97c2fc", "count": 17, "doc_freq": 13, "id": 10, "label": "\u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u044c \u0436\u0438\u0437\u043d\u044c", "length": 2, "pmi": 6.32890041412936, "shape": "dot", "size": 29, "title": "\u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u044c \u0436\u0438\u0437\u043d\u044c (pmi=6.33, doc_freq=13, length=2)", "words": ["\u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u044c", "\u0436\u0438\u0437\u043d\u044c"]}, {"color": "#97c2fc", "count": 39, "doc_freq": 28, "id": 18, "label": "\u043e\u0431\u0440\u0430\u0437 \u0436\u0438\u0437\u043d\u044c", "length": 2, "pmi": 5.234058042513423, "shape": "dot", "size": 34, "title": "\u043e\u0431\u0440\u0430\u0437 \u0436\u0438\u0437\u043d\u044c (pmi=5.23, doc_freq=28, length=2)", "words": ["\u043e\u0431\u0440\u0430\u0437", "\u0436\u0438\u0437\u043d\u044c"]}, {"color": "#97c2fc", "count": 17, "doc_freq": 14, "id": 41, "label": "\u0432\u043e\u0437\u0440\u0430\u0441\u0442 \u0433\u043e\u0434", "length": 2, "pmi": 3.243360927490753, "shape": "dot", "size": 23, "title": "\u0432\u043e\u0437\u0440\u0430\u0441\u0442 \u0433\u043e\u0434 (pmi=3.24, doc_freq=14, length=2)", "words": ["\u0432\u043e\u0437\u0440\u0430\u0441\u0442", "\u0433\u043e\u0434"]}, {"color": "#97c2fc", "count": 59, "doc_freq": 47, "id": 21, "label": "\u0433\u043e\u0434 \u043d\u0430\u0437\u0430\u0434", "length": 2, "pmi": 5.05581912703409, "shape": "dot", "size": 40, "title": "\u0433\u043e\u0434 \u043d\u0430\u0437\u0430\u0434 (pmi=5.06, doc_freq=47, length=2)", "words": ["\u0433\u043e\u0434", "\u043d\u0430\u0437\u0430\u0434"]}, {"color": "#97c2fc", "count": 17, "doc_freq": 15, "id": 27, "label": "\u0441\u043e\u0432\u0441\u0435\u043c \u0434\u0440\u0443\u0433\u043e\u0439", "length": 2, "pmi": 4.466438551899159, "shape": "dot", "size": 26, "title": "\u0441\u043e\u0432\u0441\u0435\u043c \u0434\u0440\u0443\u0433\u043e\u0439 (pmi=4.47, doc_freq=15, length=2)", "words": ["\u0441\u043e\u0432\u0441\u0435\u043c", "\u0434\u0440\u0443\u0433\u043e\u0439"]}, {"color": "#97c2fc", "count": 18, "doc_freq": 17, "id": 33, "label": "\u0434\u0440\u0443\u0433\u043e\u0439 \u0441\u0442\u043e\u0440\u043e\u043d\u0430", "length": 2, "pmi": 4.220574846005619, "shape": "dot", "size": 26, "title": "\u0434\u0440\u0443\u0433\u043e\u0439 \u0441\u0442\u043e\u0440\u043e\u043d\u0430 (pmi=4.22, doc_freq=17, length=2)", "words": ["\u0434\u0440\u0443\u0433\u043e\u0439", "\u0441\u0442\u043e\u0440\u043e\u043d\u0430"]}, {"color": "#97c2fc", "count": 12, "doc_freq": 10, "id": 34, "label": "\u043f\u0440\u043e\u0448\u043b\u044b\u0439 \u0433\u043e\u0434", "length": 2, "pmi": 3.8852504962967447, "shape": "dot", "size": 22, "title": "\u043f\u0440\u043e\u0448\u043b\u044b\u0439 \u0433\u043e\u0434 (pmi=3.89, doc_freq=10, length=2)", "words": ["\u043f\u0440\u043e\u0448\u043b\u044b\u0439", "\u0433\u043e\u0434"]}, {"color": "#97c2fc", "count": 13, "doc_freq": 11, "id": 40, "label": "\u043f\u0435\u0440\u0432\u044b\u0439 \u043c\u0435\u0441\u0442\u043e", "length": 2, "pmi": 3.3020363234882897, "shape": "dot", "size": 22, "title": "\u043f\u0435\u0440\u0432\u044b\u0439 \u043c\u0435\u0441\u0442\u043e (pmi=3.30, doc_freq=11, length=2)", "words": ["\u043f\u0435\u0440\u0432\u044b\u0439", "\u043c\u0435\u0441\u0442\u043e"]}, {"color": "#97c2fc", "count": 30, "doc_freq": 22, "id": 36, "label": "\u043a\u0430\u043a \u043c\u043e\u0436\u043d\u043e", "length": 2, "pmi": 3.6387028318438723, "shape": "dot", "size": 28, "title": "\u043a\u0430\u043a \u043c\u043e\u0436\u043d\u043e (pmi=3.64, doc_freq=22, length=2)", "words": ["\u043a\u0430\u043a", "\u043c\u043e\u0436\u043d\u043e"]}, {"color": "#97c2fc", "count": 12, "doc_freq": 11, "id": 45, "label": "\u0442\u0430\u043c \u0433\u0434\u0435", "length": 2, "pmi": 3.1045635247012204, "shape": "dot", "size": 21, "title": "\u0442\u0430\u043c \u0433\u0434\u0435 (pmi=3.10, doc_freq=11, length=2)", "words": ["\u0442\u0430\u043c", "\u0433\u0434\u0435"]}, {"color": "#97c2fc", "count": 10, "doc_freq": 10, "id": 17, "label": "\u0434\u0435\u043d\u044c \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u0435", "length": 2, "pmi": 5.342358455409026, "shape": "dot", "size": 25, "title": "\u0434\u0435\u043d\u044c \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u0435 (pmi=5.34, doc_freq=10, length=2)", "words": ["\u0434\u0435\u043d\u044c", "\u0440\u043e\u0436\u0434\u0435\u043d\u0438\u0435"]}, {"color": "#97c2fc", "count": 17, "doc_freq": 11, "id": 19, "label": "2014 \u0433\u043e\u0434", "length": 2, "pmi": 5.176246731632217, "shape": "dot", "size": 25, "title": "2014 \u0433\u043e\u0434 (pmi=5.18, doc_freq=11, length=2)", "words": ["2014", "\u0433\u043e\u0434"]}, {"color": "#97c2fc", "count": 15, "doc_freq": 10, "id": 20, "label": "2013 \u0433\u043e\u0434", "length": 2, "pmi": 5.13317800974033, "shape": "dot", "size": 25, "title": "2013 \u0433\u043e\u0434 (pmi=5.13, doc_freq=10, length=2)", "words": ["2013", "\u0433\u043e\u0434"]}, {"color": "#97c2fc", "count": 10, "doc_freq": 10, "id": 22, "label": "2016 \u0433\u043e\u0434", "length": 2, "pmi": 4.782680762656197, "shape": "dot", "size": 24, "title": "2016 \u0433\u043e\u0434 (pmi=4.78, doc_freq=10, length=2)", "words": ["2016", "\u0433\u043e\u0434"]}, {"color": "#97c2fc", "count": 15, "doc_freq": 12, "id": 23, "label": "\u0432\u044b\u0441\u043e\u043a\u0438\u0439 \u0443\u0440\u043e\u0432\u0435\u043d\u044c", "length": 2, "pmi": 4.6974810398953935, "shape": "dot", "size": 25, "title": "\u0432\u044b\u0441\u043e\u043a\u0438\u0439 \u0443\u0440\u043e\u0432\u0435\u043d\u044c (pmi=4.70, doc_freq=12, length=2)", "words": ["\u0432\u044b\u0441\u043e\u043a\u0438\u0439", "\u0443\u0440\u043e\u0432\u0435\u043d\u044c"]}, {"color": "#97c2fc", "count": 14, "doc_freq": 13, "id": 24, "label": "\u0441\u043b\u0430\u0431\u044b\u0439 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435", "length": 2, "pmi": 4.67508150293543, "shape": "dot", "size": 25, "title": "\u0441\u043b\u0430\u0431\u044b\u0439 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435 (pmi=4.68, doc_freq=13, length=2)", "words": ["\u0441\u043b\u0430\u0431\u044b\u0439", "\u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435"]}, {"color": "#97c2fc", "count": 25, "doc_freq": 11, "id": 29, "label": "\u043f\u0441\u0438\u0445\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435", "length": 2, "pmi": 4.450182225988407, "shape": "dot", "size": 24, "title": "\u043f\u0441\u0438\u0445\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435 (pmi=4.45, doc_freq=11, length=2)", "words": ["\u043f\u0441\u0438\u0445\u0438\u0447\u0435\u0441\u043a\u0438\u0439", "\u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435"]}, {"color": "#97c2fc", "count": 51, "doc_freq": 46, "id": 44, "label": "\u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0430 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435", "length": 2, "pmi": 3.1389013753005535, "shape": "dot", "size": 39, "title": "\u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0430 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435 (pmi=3.14, doc_freq=46, length=2)", "words": ["\u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0430", "\u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435"]}, {"color": "#97c2fc", "count": 11, "doc_freq": 11, "id": 43, "label": "\u0441\u0442\u0440\u0430\u043d\u0430 \u043c\u0438\u0440", "length": 2, "pmi": 3.234155657465151, "shape": "dot", "size": 21, "title": "\u0441\u0442\u0440\u0430\u043d\u0430 \u043c\u0438\u0440 (pmi=3.23, doc_freq=11, length=2)", "words": ["\u0441\u0442\u0440\u0430\u043d\u0430", "\u043c\u0438\u0440"]}, {"color": "#97c2fc", "count": 15, "doc_freq": 12, "id": 0, "label": "\u043f\u0430\u0440\u0442\u0438\u044f \u0435\u0434\u0438\u043d\u044b\u0439 \u0440\u043e\u0441\u0441\u0438\u044f", "length": 3, "pmi": 14.911973866545388, "shape": "dot", "size": 40, "title": "\u043f\u0430\u0440\u0442\u0438\u044f \u0435\u0434\u0438\u043d\u044b\u0439 \u0440\u043e\u0441\u0441\u0438\u044f (pmi=14.91, doc_freq=12, length=3)", "words": ["\u043f\u0430\u0440\u0442\u0438\u044f", "\u0435\u0434\u0438\u043d\u044b\u0439", "\u0440\u043e\u0441\u0441\u0438\u044f"]}, {"color": "#97c2fc", "count": 30, "doc_freq": 22, "id": 1, "label": "\u0442\u043e\u0447\u043a\u0430 \u0437\u0440\u0435\u043d\u0438\u0435", "length": 2, "pmi": 9.653045482239602, "shape": "dot", "size": 40, "title": "\u0442\u043e\u0447\u043a\u0430 \u0437\u0440\u0435\u043d\u0438\u0435 (pmi=9.65, doc_freq=22, length=2)", "words": ["\u0442\u043e\u0447\u043a\u0430", "\u0437\u0440\u0435\u043d\u0438\u0435"]}, {"color": "#97c2fc", "count": 84, "doc_freq": 16, "id": 6, "label": "\u0440\u043e\u0441\u0441\u0438\u0439\u0441\u043a\u0438\u0439 \u0444\u0435\u0434\u0435\u0440\u0430\u0446\u0438\u044f", "length": 2, "pmi": 7.34487785403493, "shape": "dot", "size": 32.68975570806986, "title": "\u0440\u043e\u0441\u0441\u0438\u0439\u0441\u043a\u0438\u0439 \u0444\u0435\u0434\u0435\u0440\u0430\u0446\u0438\u044f (pmi=7.34, doc_freq=16, length=2)", "words": ["\u0440\u043e\u0441\u0441\u0438\u0439\u0441\u043a\u0438\u0439", "\u0444\u0435\u0434\u0435\u0440\u0430\u0446\u0438\u044f"]}, {"color": "#97c2fc", "count": 19, "doc_freq": 14, "id": 11, "label": "\u043c\u0438\u0440\u043e\u0432\u043e\u0439 \u0432\u043e\u0439\u043d\u0430", "length": 2, "pmi": 6.222183015799075, "shape": "dot", "size": 29.44436603159815, "title": "\u043c\u0438\u0440\u043e\u0432\u043e\u0439 \u0432\u043e\u0439\u043d\u0430 (pmi=6.22, doc_freq=14, length=2)", "words": ["\u043c\u0438\u0440\u043e\u0432\u043e\u0439", "\u0432\u043e\u0439\u043d\u0430"]}, {"color": "#97c2fc", "count": 24, "doc_freq": 10, "id": 14, "label": "\u0440\u0443\u0441\u0441\u043a\u0438\u0439 \u044f\u0437\u044b\u043a", "length": 2, "pmi": 5.867548494563286, "shape": "dot", "size": 26.73509698912657, "title": "\u0440\u0443\u0441\u0441\u043a\u0438\u0439 \u044f\u0437\u044b\u043a (pmi=5.87, doc_freq=10, length=2)", "words": ["\u0440\u0443\u0441\u0441\u043a\u0438\u0439", "\u044f\u0437\u044b\u043a"]}, {"color": "#97c2fc", "count": 24, "doc_freq": 18, "id": 37, "label": "\u043c\u043e\u043b\u043e\u0434\u043e\u0439 \u0447\u0435\u043b\u043e\u0432\u0435\u043a", "length": 2, "pmi": 3.6280205490879527, "shape": "dot", "size": 26.256041098175906, "title": "\u043c\u043e\u043b\u043e\u0434\u043e\u0439 \u0447\u0435\u043b\u043e\u0432\u0435\u043a (pmi=3.63, doc_freq=18, length=2)", "words": ["\u043c\u043e\u043b\u043e\u0434\u043e\u0439", "\u0447\u0435\u043b\u043e\u0432\u0435\u043a"]}]);
+                  edges = new vis.DataSet([{"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.993", "to": 3, "width": 0.9930360317230225}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.756", "to": 5, "width": 0.7562044262886047}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.755", "to": 12, "width": 0.7551613450050354}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.750", "to": 13, "width": 0.7501202821731567}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.787", "to": 26, "width": 0.7865643501281738}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.761", "to": 32, "width": 0.7609085440635681}, {"color": "rgb(0,255,120)", "from": 2, "title": "sim=0.774", "to": 38, "width": 0.7741931676864624}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.760", "to": 5, "width": 0.7602393627166748}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.753", "to": 12, "width": 0.7528926730155945}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.758", "to": 13, "width": 0.7583197951316833}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.793", "to": 26, "width": 0.7928420305252075}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.768", "to": 32, "width": 0.7677695155143738}, {"color": "rgb(0,255,120)", "from": 3, "title": "sim=0.769", "to": 38, "width": 0.769167423248291}, {"color": "rgb(0,255,120)", "from": 4, "title": "sim=0.852", "to": 13, "width": 0.8521662354469299}, {"color": "rgb(0,255,120)", "from": 4, "title": "sim=0.823", "to": 25, "width": 0.8225410580635071}, {"color": "rgb(0,255,120)", "from": 4, "title": "sim=0.777", "to": 30, "width": 0.7765516042709351}, {"color": "rgb(0,255,120)", "from": 4, "title": "sim=0.752", "to": 32, "width": 0.7521605491638184}, {"color": "rgb(0,255,120)", "from": 4, "title": "sim=0.780", "to": 35, "width": 0.7803778052330017}, {"color": "rgb(0,255,120)", "from": 5, "title": "sim=0.755", "to": 12, "width": 0.7545934915542603}, {"color": "rgb(0,255,120)", "from": 5, "title": "sim=0.778", "to": 15, "width": 0.7775657773017883}, {"color": "rgb(0,255,120)", "from": 5, "title": "sim=0.755", "to": 26, "width": 0.754934549331665}, {"color": "rgb(0,255,120)", "from": 5, "title": "sim=0.796", "to": 32, "width": 0.7959800958633423}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.766", "to": 12, "width": 0.7663678526878357}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.762", "to": 13, "width": 0.761955738067627}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.760", "to": 16, "width": 0.7596458792686462}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.757", "to": 25, "width": 0.7567655444145203}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.774", "to": 26, "width": 0.7736849188804626}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.868", "to": 39, "width": 0.8679556250572205}, {"color": "rgb(0,255,120)", "from": 7, "title": "sim=0.752", "to": 42, "width": 0.7522587180137634}, {"color": "rgb(0,255,120)", "from": 8, "title": "sim=0.761", "to": 31, "width": 0.761072039604187}, {"color": "rgb(0,255,120)", "from": 9, "title": "sim=0.757", "to": 28, "width": 0.7571192383766174}, {"color": "rgb(0,255,120)", "from": 10, "title": "sim=0.941", "to": 18, "width": 0.9413954615592957}, {"color": "rgb(0,255,120)", "from": 10, "title": "sim=0.768", "to": 41, "width": 0.7683411240577698}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.792", "to": 13, "width": 0.7916347980499268}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.795", "to": 16, "width": 0.7952688932418823}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.773", "to": 21, "width": 0.7729005813598633}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.793", "to": 25, "width": 0.7934324145317078}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.829", "to": 26, "width": 0.8289422392845154}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.798", "to": 27, "width": 0.7980484962463379}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.776", "to": 33, "width": 0.7755078077316284}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.761", "to": 34, "width": 0.7609599232673645}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.847", "to": 35, "width": 0.8468335866928101}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.751", "to": 38, "width": 0.7514329552650452}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.797", "to": 39, "width": 0.7966758608818054}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.903", "to": 40, "width": 0.903306782245636}, {"color": "rgb(0,255,120)", "from": 12, "title": "sim=0.940", "to": 42, "width": 0.9403390884399414}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.778", "to": 16, "width": 0.7778368592262268}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.818", "to": 25, "width": 0.8176892995834351}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.790", "to": 26, "width": 0.7897302508354187}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.834", "to": 27, "width": 0.8343732953071594}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.814", "to": 30, "width": 0.8138301372528076}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.843", "to": 33, "width": 0.8427742719650269}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.811", "to": 35, "width": 0.8109369277954102}, {"color": "rgb(0,255,120)", "from": 13, "title": "sim=0.771", "to": 39, "width": 0.770561695098877}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.776", "to": 26, "width": 0.7761370539665222}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.812", "to": 32, "width": 0.8118401169776917}, {"color": "rgb(0,255,120)", "from": 15, "title": "sim=0.786", "to": 36, "width": 0.7855631113052368}, {"color": "rgb(0,255,120)", "from": 16, "title": "sim=0.815", "to": 26, "width": 0.8152866959571838}, {"color": "rgb(0,255,120)", "from": 16, "title": "sim=0.839", "to": 27, "width": 0.839258074760437}, {"color": "rgb(0,255,120)", "from": 16, "title": "sim=0.750", "to": 30, "width": 0.7503849864006042}, {"color": "rgb(0,255,120)", "from": 16, "title": "sim=0.765", "to": 33, "width": 0.7650133371353149}, {"color": "rgb(0,255,120)", "from": 16, "title": "sim=0.752", "to": 35, "width": 0.7518692016601562}, {"color": "rgb(0,255,120)", "from": 16, "title": "sim=0.821", "to": 36, "width": 0.820551872253418}, {"color": "rgb(0,255,120)", "from": 16, "title": "sim=0.842", "to": 38, "width": 0.8421308994293213}, {"color": "rgb(0,255,120)", "from": 16, "title": "sim=0.759", "to": 39, "width": 0.7588104605674744}, {"color": "rgb(0,255,120)", "from": 16, "title": "sim=0.768", "to": 45, "width": 0.767822265625}, {"color": "rgb(0,255,120)", "from": 17, "title": "sim=0.765", "to": 41, "width": 0.7645549178123474}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.875", "to": 20, "width": 0.8753882646560669}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.765", "to": 21, "width": 0.7648167014122009}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.835", "to": 22, "width": 0.8352102041244507}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.787", "to": 34, "width": 0.7872582077980042}, {"color": "rgb(0,255,120)", "from": 19, "title": "sim=0.784", "to": 41, "width": 0.7840280532836914}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.751", "to": 21, "width": 0.7513363361358643}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.826", "to": 22, "width": 0.8256500363349915}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.791", "to": 34, "width": 0.7908064723014832}, {"color": "rgb(0,255,120)", "from": 20, "title": "sim=0.792", "to": 41, "width": 0.7917916178703308}, {"color": "rgb(0,255,120)", "from": 21, "title": "sim=0.753", "to": 22, "width": 0.753407895565033}, {"color": "rgb(0,255,120)", "from": 21, "title": "sim=0.937", "to": 34, "width": 0.9365134835243225}, {"color": "rgb(0,255,120)", "from": 21, "title": "sim=0.806", "to": 39, "width": 0.8056409358978271}, {"color": "rgb(0,255,120)", "from": 21, "title": "sim=0.865", "to": 41, "width": 0.864538848400116}, {"color": "rgb(0,255,120)", "from": 21, "title": "sim=0.782", "to": 42, "width": 0.7821123600006104}, {"color": "rgb(0,255,120)", "from": 22, "title": "sim=0.772", "to": 34, "width": 0.7723380923271179}, {"color": "rgb(0,255,120)", "from": 22, "title": "sim=0.781", "to": 41, "width": 0.7809973359107971}, {"color": "rgb(0,255,120)", "from": 23, "title": "sim=0.755", "to": 35, "width": 0.7548590898513794}, {"color": "rgb(0,255,120)", "from": 24, "title": "sim=0.929", "to": 29, "width": 0.9292511940002441}, {"color": "rgb(0,255,120)", "from": 24, "title": "sim=0.820", "to": 31, "width": 0.8201694488525391}, {"color": "rgb(0,255,120)", "from": 24, "title": "sim=0.876", "to": 44, "width": 0.8758867979049683}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.819", "to": 26, "width": 0.8192456960678101}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.759", "to": 27, "width": 0.7589311003684998}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.755", "to": 28, "width": 0.7549318671226501}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.760", "to": 30, "width": 0.7601022124290466}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.788", "to": 35, "width": 0.7879829406738281}, {"color": "rgb(0,255,120)", "from": 25, "title": "sim=0.763", "to": 42, "width": 0.763102114200592}, {"color": "rgb(0,255,120)", "from": 26, "title": "sim=0.811", "to": 27, "width": 0.8106886744499207}, {"color": "rgb(0,255,120)", "from": 26, "title": "sim=0.780", "to": 28, "width": 0.7803645133972168}, {"color": "rgb(0,255,120)", "from": 26, "title": "sim=0.761", "to": 32, "width": 0.7608045935630798}, {"color": "rgb(0,255,120)", "from": 26, "title": "sim=0.767", "to": 33, "width": 0.767264187335968}, {"color": "rgb(0,255,120)", "from": 26, "title": "sim=0.809", "to": 35, "width": 0.8088233470916748}, {"color": "rgb(0,255,120)", "from": 26, "title": "sim=0.770", "to": 36, "width": 0.7702375650405884}, {"color": "rgb(0,255,120)", "from": 26, "title": "sim=0.784", "to": 38, "width": 0.784370481967926}, {"color": "rgb(0,255,120)", "from": 26, "title": "sim=0.758", "to": 40, "width": 0.7576882839202881}, {"color": "rgb(0,255,120)", "from": 26, "title": "sim=0.767", "to": 42, "width": 0.7669137120246887}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.762", "to": 30, "width": 0.761536180973053}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.903", "to": 33, "width": 0.9027693867683411}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.782", "to": 35, "width": 0.7824140191078186}, {"color": "rgb(0,255,120)", "from": 27, "title": "sim=0.760", "to": 39, "width": 0.7600480914115906}, {"color": "rgb(0,255,120)", "from": 28, "title": "sim=0.794", "to": 44, "width": 0.7941062450408936}, {"color": "rgb(0,255,120)", "from": 29, "title": "sim=0.852", "to": 31, "width": 0.852193295955658}, {"color": "rgb(0,255,120)", "from": 29, "title": "sim=0.892", "to": 44, "width": 0.891655445098877}, {"color": "rgb(0,255,120)", "from": 31, "title": "sim=0.780", "to": 43, "width": 0.7804503440856934}, {"color": "rgb(0,255,120)", "from": 31, "title": "sim=0.811", "to": 44, "width": 0.8113334774971008}, {"color": "rgb(0,255,120)", "from": 32, "title": "sim=0.829", "to": 36, "width": 0.8285866379737854}, {"color": "rgb(0,255,120)", "from": 32, "title": "sim=0.761", "to": 38, "width": 0.7610400915145874}, {"color": "rgb(0,255,120)", "from": 34, "title": "sim=0.842", "to": 39, "width": 0.8418269157409668}, {"color": "rgb(0,255,120)", "from": 34, "title": "sim=0.886", "to": 41, "width": 0.8861863017082214}, {"color": "rgb(0,255,120)", "from": 34, "title": "sim=0.778", "to": 42, "width": 0.7780436873435974}, {"color": "rgb(0,255,120)", "from": 35, "title": "sim=0.762", "to": 39, "width": 0.7620929479598999}, {"color": "rgb(0,255,120)", "from": 35, "title": "sim=0.823", "to": 40, "width": 0.8229151964187622}, {"color": "rgb(0,255,120)", "from": 35, "title": "sim=0.791", "to": 42, "width": 0.7907203435897827}, {"color": "rgb(0,255,120)", "from": 36, "title": "sim=0.800", "to": 38, "width": 0.8004763126373291}, {"color": "rgb(0,255,120)", "from": 36, "title": "sim=0.757", "to": 45, "width": 0.7569808959960938}, {"color": "rgb(0,255,120)", "from": 39, "title": "sim=0.753", "to": 40, "width": 0.7525475025177002}, {"color": "rgb(0,255,120)", "from": 39, "title": "sim=0.803", "to": 42, "width": 0.8034757375717163}, {"color": "rgb(0,255,120)", "from": 40, "title": "sim=0.889", "to": 42, "width": 0.8886776566505432}, {"color": "rgb(0,255,120)", "from": 40, "title": "sim=0.753", "to": 45, "width": 0.7527320981025696}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+    <script type="text/javascript">
+    function enhanceNetwork(network, nodes, edges) {
+        // controls panel
+        const panel = document.createElement('div');
+        panel.style.position = 'fixed';
+        panel.style.top = '10px';
+        panel.style.left = '10px';
+        panel.style.zIndex = 9999;
+        panel.style.background = 'rgba(255,255,255,0.96)';
+        panel.style.border = '1px solid #ddd';
+        panel.style.padding = '10px';
+        panel.style.borderRadius = '8px';
+        panel.style.fontFamily = 'sans-serif';
+        panel.innerHTML = `
+            <b>Тема: здоровье</b><br>
+            <small>Узлов: 46, Рёбер: 125</small><br>
+            <small>Плотность: 0.121, Кластеризация: 0.451</small><br>
+            <small>Энтропия: 5.024 (норм.: 0.909)</small><br>
+            <hr style="margin:6px 0;">
+            <input type="text" id="patternSearch" placeholder="Поиск паттерна..." style="width:200px;">
+            <button id="searchBtn">Найти</button>
+            <button id="resetBtn">Сброс</button>
+            <hr style="margin:6px 0;">
+            Мин. похожесть: <input type="range" id="weightSlider" min="0" max="1" step="0.01" value="0.75">
+            <span id="weightVal">0.75</span>
+        `;
+        document.body.appendChild(panel);
+
+        const infoBox = document.createElement('div');
+        infoBox.style.position = 'fixed';
+        infoBox.style.bottom = '14px';
+        infoBox.style.right = '14px';
+        infoBox.style.zIndex = 9999;
+        infoBox.style.background = 'rgba(255,255,255,0.95)';
+        infoBox.style.border = '1px solid #ddd';
+        infoBox.style.padding = '10px';
+        infoBox.style.maxWidth = '420px';
+        infoBox.style.maxHeight = '320px';
+        infoBox.style.overflow = 'auto';
+        infoBox.style.borderRadius = '8px';
+        infoBox.style.display = 'none';
+        document.body.appendChild(infoBox);
+
+        // поиск
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const q = document.getElementById('patternSearch').value.trim().toLowerCase();
+            if (!q) return;
+            const found = nodes.get({filter: n => n.label.toLowerCase().includes(q) });
+            if (found.length === 0) {
+                alert('Не найдено');
+                return;
+            }
+            const ids = found.map(x => x.id);
+            network.selectNodes(ids);
+            network.fit({nodes: ids, animation: true});
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            document.getElementById('patternSearch').value = '';
+            // restore nodes
+            const allNodes = nodes.get();
+            for (let n of allNodes) {
+                n.color = undefined;
+            }
+            nodes.update(allNodes);
+            // restore edges
+            const allEdges = edges.get();
+            for (let e of allEdges) {
+                e.hidden = false;
+                e.color = undefined;
+            }
+            edges.update(allEdges);
+            infoBox.style.display = 'none';
+            network.fit();
+        });
+
+        // weight filter
+        const slider = document.getElementById('weightSlider');
+        const weightVal = document.getElementById('weightVal');
+        slider.addEventListener('input', function() {
+            const minW = parseFloat(slider.value);
+            weightVal.textContent = minW.toFixed(2);
+            const allEdges = edges.get();
+            for (let e of allEdges) {
+                e.hidden = e.weight < minW;
+            }
+            edges.update(allEdges);
+        });
+
+        // click: highlight neighbors and edges
+        network.on('click', function(params) {
+            if (params.nodes.length > 0) {
+                const id = params.nodes[0];
+                const connected = network.getConnectedNodes(id);
+                const allNodes = nodes.get();
+                for (let n of allNodes) {
+                    n.color = (n.id === id || connected.includes(n.id)) ? '#ff9800' : '#d3d3d3';
+                }
+                nodes.update(allNodes);
+                // color edges: highlight edges adjacent to id
+                const allEdges = edges.get();
+                for (let e of allEdges) {
+                    if (e.from === id || e.to === id) {
+                        e.color = '#ff9800';
+                        e.width = Math.max(1.5, e.weight*5);
+                        e.hidden = false;
+                    } else {
+                        e.color = '#cccccc';
+                    }
+                }
+                edges.update(allEdges);
+            } else {
+                // background click: reset colors
+                const allNodes = nodes.get();
+                for (let n of allNodes) n.color = undefined;
+                nodes.update(allNodes);
+                const allEdges = edges.get();
+                for (let e of allEdges) e.color = undefined;
+                edges.update(allEdges);
+            }
+        });
+
+        // doubleClick: show constituents (words, count, doc_freq, pmi)
+        network.on('doubleClick', function(params) {
+            if (params.nodes.length > 0) {
+                const id = params.nodes[0];
+                const node = nodes.get(id);
+                if (!node) return;
+                // assemble metadata string
+                let meta = `<b>Паттерн:</b> ${node.label}<br>`;
+                if (node.words) meta += `<b>Слова:</b> ${node.words.join(', ')}<br>`;
+                if (node.count!==undefined) meta += `<b>count:</b> ${node.count} `;
+                if (node.doc_freq!==undefined) meta += `<b>doc_freq:</b> ${node.doc_freq} `;
+                if (node.pmi!==undefined) meta += `<b>pmi:</b> ${parseFloat(node.pmi).toFixed(2)} `;
+                if (node.length!==undefined) meta += `<b>length:</b> ${node.length} `;
+                infoBox.innerHTML = meta;
+                infoBox.style.display = 'block';
+            }
+        });
+
+        // ensure edges are visible initially
+        const allEdgesInit = edges.get();
+        for (let e of allEdgesInit) e.hidden = false;
+        edges.update(allEdgesInit);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        enhanceNetwork(network, nodes, edges);
+    });
+    </script>
+    
+</body>
+</html>

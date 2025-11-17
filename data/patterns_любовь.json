@@ -1,0 +1,472 @@
+[
+  {
+    "ngram": "партия единый россия",
+    "count": 21,
+    "doc_freq": 19,
+    "pmi": 13.454687209386236,
+    "meaningful_words": [
+      "партия",
+      "единый",
+      "россия"
+    ],
+    "length": 3
+  },
+  {
+    "ngram": "точка зрение",
+    "count": 27,
+    "doc_freq": 22,
+    "pmi": 9.71733033167762,
+    "meaningful_words": [
+      "точка",
+      "зрение"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "крайний мера",
+    "count": 15,
+    "doc_freq": 13,
+    "pmi": 9.387464417365615,
+    "meaningful_words": [
+      "крайний",
+      "мера"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "обращать внимание",
+    "count": 15,
+    "doc_freq": 12,
+    "pmi": 8.926845883777876,
+    "meaningful_words": [
+      "обращать",
+      "внимание"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "обратить внимание",
+    "count": 18,
+    "doc_freq": 14,
+    "pmi": 8.914245846998243,
+    "meaningful_words": [
+      "обратить",
+      "внимание"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "оригинал взять",
+    "count": 45,
+    "doc_freq": 40,
+    "pmi": 8.530917207446738,
+    "meaningful_words": [
+      "оригинал",
+      "взять"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "советский союз",
+    "count": 44,
+    "doc_freq": 20,
+    "pmi": 7.3334364834838635,
+    "meaningful_words": [
+      "советский",
+      "союз"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "принимать решение",
+    "count": 11,
+    "doc_freq": 10,
+    "pmi": 6.994453224416771,
+    "meaningful_words": [
+      "принимать",
+      "решение"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "данный момент",
+    "count": 13,
+    "doc_freq": 10,
+    "pmi": 6.4852396330520925,
+    "meaningful_words": [
+      "данный",
+      "момент"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "слава бог",
+    "count": 16,
+    "doc_freq": 12,
+    "pmi": 6.437151541465968,
+    "meaningful_words": [
+      "слава",
+      "бог"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "день рождение",
+    "count": 19,
+    "doc_freq": 16,
+    "pmi": 6.148097742709544,
+    "meaningful_words": [
+      "день",
+      "рождение"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "первый очередь",
+    "count": 26,
+    "doc_freq": 23,
+    "pmi": 6.061841838920512,
+    "meaningful_words": [
+      "первый",
+      "очередь"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "данный случай",
+    "count": 11,
+    "doc_freq": 10,
+    "pmi": 5.938818525443953,
+    "meaningful_words": [
+      "данный",
+      "случай"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "ребенок внук",
+    "count": 10,
+    "doc_freq": 10,
+    "pmi": 5.76441841491298,
+    "meaningful_words": [
+      "ребенок",
+      "внук"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "тогда когда",
+    "count": 11,
+    "doc_freq": 10,
+    "pmi": 5.70898777244365,
+    "meaningful_words": [
+      "тогда",
+      "когда"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "справедливый россия",
+    "count": 17,
+    "doc_freq": 12,
+    "pmi": 5.633625004635014,
+    "meaningful_words": [
+      "справедливый",
+      "россия"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "мужчина женщина",
+    "count": 21,
+    "doc_freq": 15,
+    "pmi": 5.630912997423459,
+    "meaningful_words": [
+      "мужчина",
+      "женщина"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "речь идти",
+    "count": 15,
+    "doc_freq": 13,
+    "pmi": 5.432923418160738,
+    "meaningful_words": [
+      "речь",
+      "идти"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "год назад",
+    "count": 44,
+    "doc_freq": 35,
+    "pmi": 5.337829738568169,
+    "meaningful_words": [
+      "год",
+      "назад"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "иметь право",
+    "count": 23,
+    "doc_freq": 20,
+    "pmi": 5.324580381526142,
+    "meaningful_words": [
+      "иметь",
+      "право"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "2016 год",
+    "count": 18,
+    "doc_freq": 11,
+    "pmi": 5.3158034322381695,
+    "meaningful_words": [
+      "2016",
+      "год"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "больший часть",
+    "count": 16,
+    "doc_freq": 16,
+    "pmi": 5.21828173394374,
+    "meaningful_words": [
+      "больший",
+      "часть"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "любовь голубь",
+    "count": 13,
+    "doc_freq": 11,
+    "pmi": 4.888595327283301,
+    "meaningful_words": [
+      "любовь",
+      "голубь"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "так далее",
+    "count": 45,
+    "doc_freq": 39,
+    "pmi": 4.780797984353504,
+    "meaningful_words": [
+      "так",
+      "далее"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "очень важный",
+    "count": 25,
+    "doc_freq": 21,
+    "pmi": 4.621929671002639,
+    "meaningful_words": [
+      "очень",
+      "важный"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "самый главный",
+    "count": 31,
+    "doc_freq": 25,
+    "pmi": 4.607285626116266,
+    "meaningful_words": [
+      "самый",
+      "главный"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "сам дело",
+    "count": 51,
+    "doc_freq": 44,
+    "pmi": 4.236404570139776,
+    "meaningful_words": [
+      "дело"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "очень интересный",
+    "count": 16,
+    "doc_freq": 15,
+    "pmi": 3.896279390064267,
+    "meaningful_words": [
+      "очень",
+      "интересный"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "самый важный",
+    "count": 12,
+    "doc_freq": 12,
+    "pmi": 3.885750072519665,
+    "meaningful_words": [
+      "самый",
+      "важный"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "объект любовь",
+    "count": 16,
+    "doc_freq": 10,
+    "pmi": 3.8306036045241254,
+    "meaningful_words": [
+      "объект",
+      "любовь"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "очень много",
+    "count": 19,
+    "doc_freq": 16,
+    "pmi": 3.6899480944312897,
+    "meaningful_words": [
+      "очень",
+      "много"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "уже давно",
+    "count": 13,
+    "doc_freq": 13,
+    "pmi": 3.641586630370649,
+    "meaningful_words": [
+      "давно"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "русский народ",
+    "count": 18,
+    "doc_freq": 15,
+    "pmi": 3.6083373094316613,
+    "meaningful_words": [
+      "русский",
+      "народ"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "патриотизм любовь",
+    "count": 19,
+    "doc_freq": 19,
+    "pmi": 3.4818868121989195,
+    "meaningful_words": [
+      "патриотизм",
+      "любовь"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "первый место",
+    "count": 27,
+    "doc_freq": 14,
+    "pmi": 3.4117455064690594,
+    "meaningful_words": [
+      "первый",
+      "место"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "давно уже",
+    "count": 11,
+    "doc_freq": 11,
+    "pmi": 3.400578530866854,
+    "meaningful_words": [
+      "давно"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "любовь родина",
+    "count": 42,
+    "doc_freq": 35,
+    "pmi": 3.400563941906035,
+    "meaningful_words": [
+      "любовь",
+      "родина"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "другой сторона",
+    "count": 13,
+    "doc_freq": 11,
+    "pmi": 3.394933532716148,
+    "meaningful_words": [
+      "другой",
+      "сторона"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "там где",
+    "count": 19,
+    "doc_freq": 15,
+    "pmi": 3.3612798533069204,
+    "meaningful_words": [
+      "где"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "совсем другой",
+    "count": 10,
+    "doc_freq": 10,
+    "pmi": 3.28904236412541,
+    "meaningful_words": [
+      "совсем",
+      "другой"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "последний год",
+    "count": 22,
+    "doc_freq": 16,
+    "pmi": 3.131378861100742,
+    "meaningful_words": [
+      "последний",
+      "год"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "так называть",
+    "count": 16,
+    "doc_freq": 15,
+    "pmi": 3.061534391920757,
+    "meaningful_words": [
+      "так",
+      "называть"
+    ],
+    "length": 2
+  },
+  {
+    "ngram": "первый раз",
+    "count": 17,
+    "doc_freq": 12,
+    "pmi": 3.043881127414838,
+    "meaningful_words": [
+      "первый",
+      "раз"
+    ],
+    "length": 2
+  }
+]

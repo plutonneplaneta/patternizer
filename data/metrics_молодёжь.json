@@ -1,0 +1,10 @@
+{
+  "nodes": 33,
+  "edges": 64,
+  "density": 0.12121212121212122,
+  "avg_clustering": 0.4334295334295334,
+  "degree_entropy": 4.623087037567204,
+  "normalized_entropy": 0.9164801417529147,
+  "avg_degree": 3.878787878787879,
+  "assortativity": 0.4703716357286566
+}
